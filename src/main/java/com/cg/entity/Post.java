@@ -29,7 +29,7 @@ public class Post {
     private List<Comments> comments;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private List<Likes> likes;
+    private List<Like> likes;
 
     public Post() {
     }
@@ -82,11 +82,11 @@ public class Post {
         this.comments = comments;
     }
 
-    public List<Likes> getLikes() {
+    public List<Like> getLikes() {
         return likes;
     }
 
-    public void setLikes(List<Likes> likes) {
+    public void setLikes(List<Like> likes) {
         this.likes = likes;
     }
 }
