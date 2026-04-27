@@ -1,6 +1,6 @@
 package com.cg.entity;
 
-package com.cg.entity;
+
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -29,7 +29,7 @@ public class Post {
     private List<Comments> comments;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private List<Like> likes;
+    private List<Likes> likes;
 
     public Post() {
     }
@@ -82,11 +82,11 @@ public class Post {
         this.comments = comments;
     }
 
-    public List<Like> getLikes() {
+    public List<Likes> getLikes() {
         return likes;
     }
 
-    public void setLikes(List<Like> likes) {
+    public void setLikes(List<Likes> likes) {
         this.likes = likes;
     }
 }

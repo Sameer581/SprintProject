@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "likes")
-public class Like {
+public class Likes {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +24,7 @@ public class Like {
 	@JoinColumn(name ="userid")
 	private User User;
 
-	public Like(int likeId, Post post, com.cg.entity.User user) {
+	public Likes(int likeId, Post post, com.cg.entity.User user) {
 		super();
 		LikeId = likeId;
 		this.post = post;
@@ -54,5 +54,6 @@ public class Like {
 	public void setUser(User user) {
 		User = user;
 	}
+}
 
 	
