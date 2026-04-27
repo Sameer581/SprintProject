@@ -9,8 +9,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.util.List;
-
 @Entity
 @Table(name = "groups")
 public class Group {
@@ -31,7 +29,7 @@ public class Group {
     public Group() {
     }
 
-    public Group(Integer groupId, String groupName, User admin, List<User> members) {
+    public Group(Integer groupId, String groupName, User admin) {
         this.groupId = groupId;
         this.groupName = groupName;
         this.admin = admin;
