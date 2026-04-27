@@ -29,6 +29,47 @@ public class Friendship {
     // Store an enum value in DB
     @Enumerated(EnumType.STRING)
     private FriendshipStatus status;
+
+
+	public Integer getFriendshipId() {
+		return friendshipId;
+	}
+
+
+	public void setFriendshipId(Integer friendshipId) {
+		this.friendshipId = friendshipId;
+	}
+
+
+	public User getUser1() {
+		return user1;
+	}
+
+
+	public void setUser1(User user1) {
+		this.user1 = user1;
+	}
+
+
+	public User getUser2() {
+		return user2;
+	}
+
+
+	public void setUser2(User user2) {
+		this.user2 = user2;
+	}
+
+
+	public FriendshipStatus getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(FriendshipStatus status) {
+		this.status = status;
+	}
+    
     
     
     
