@@ -3,7 +3,7 @@ package com.cg.dto;
 import com.cg.enums.FriendshipStatus;
 
 //RESPONSE DTO - to send back to the client
-public class FriendshipResponseDTO {
+public class FriendshipResponseDto {
 	
 	
 	private Integer friendshipId;
@@ -15,12 +15,12 @@ public class FriendshipResponseDTO {
 
 
 // No-args constructor
- public FriendshipResponseDTO() {}
+ public FriendshipResponseDto() {}
  
  
 
  // All-args constructor
- public FriendshipResponseDTO(Integer friendshipId, Integer userId1, String username1, 
+ public FriendshipResponseDto(Integer friendshipId, Integer userId1, String username1, 
          Integer userId2, String username2, FriendshipStatus status) {
 this.friendshipId = friendshipId;
 this.userId1 = userId1;

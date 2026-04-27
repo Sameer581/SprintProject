@@ -2,7 +2,7 @@ package com.cg.dto;
 
 import com.cg.enums.FriendshipStatus;
 
-public class FriendRequestDTO {
+public class FriendRequestDto {
 	
 
 	private Integer userId1; // Sender
@@ -10,11 +10,11 @@ public class FriendRequestDTO {
 
     
     // No-args constructor
-    public FriendRequestDTO() {}
+    public FriendRequestDto() {}
 
     
     // All args constructor
-    public FriendRequestDTO(Integer userId1, Integer userId2) {
+    public FriendRequestDto(Integer userId1, Integer userId2) {
         this.userId1 = userId1;
         this.userId2 = userId2;
     }
