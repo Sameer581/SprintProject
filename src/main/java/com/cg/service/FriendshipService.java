@@ -7,23 +7,45 @@ import com.cg.enums.FriendshipStatus;
 
 public interface FriendshipService {
 	
-	 FriendshipDto sendFriendRequest(FriendshipDto dto);                  // Endpoint 1
+	// total 10 end points
 	
-	 FriendshipDto updateFriendshipStatus(Integer friendshipId,           // Endpoint 2
-	                                   FriendshipStatus status);      
-	   
-	    void deleteFriendship(Integer friendshipId);                        
-	    // Endpoint 3,4
-	    List<FriendshipDto> getFriendsByUserId(Integer userId);            // Endpoint 5
+	
+	// Sending friend request
+	 FriendshipDto sendFriendRequest(FriendshipDto dto);                  
+	 
+	 
+	 // accepting friend request
+	 FriendshipDto acceptFriendRequest(Long friendshipId);                
+	 
+	 
+	 // rejecting friend request
+	 void rejectFriendRequest(Long friendshipId);
+	 
+	 
+	 // get all pending requests from users
+	 List<FriendshipDto> getPendingRequests(Long userId);
+	 
+	 
+	 // get friendship by friendshipId
+	 FriendshipDto getFriendshipById(Long friendshipId);
+	 
+	 
+	 // friends by user id
+	 List<FriendshipDto> getFriendsByUserId(Long userId);  
+	              
 	    
-	    List<FriendshipDto> getPendingRequestsForUser(Integer userId);     // Endpoint 6
+	 // finding list of all friendships
+	 List<FriendshipDto> getAllFriendships();                            
 	    
-	    FriendshipDto getFriendshipById(Integer friendshipId);             // Endpoint 7
+	
+	 FriendshipDto checkFriendship(Integer userId1, Integer userId2);   
 	    
-	    List<FriendshipDto> getAllFriendships();                            // Endpoint 8
+	 
+	 // get number of friends count
+	 Integer getFriendsCount(Integer userId);                           
 	    
-	    FriendshipDto checkFriendship(Integer userId1, Integer userId2);   // Endpoint 9
-	    
-	    Integer getFriendsCount(Integer userId);                           // Endpoint 10
+
+	 // deleting/removing friend
+	 // void removeFriend(Integer friendshipId);
 
 }
