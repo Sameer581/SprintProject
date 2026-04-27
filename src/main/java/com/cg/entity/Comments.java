@@ -11,11 +11,8 @@ public class Comments {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "commentID")
-<<<<<<< HEAD
-    private Integer commentID;
-=======
     private Long commentID;
->>>>>>> 26f938fe5dfa1c2b1ead5e61104464a56daeb59f
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "postID")
