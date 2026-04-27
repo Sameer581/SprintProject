@@ -26,9 +26,26 @@ public interface FriendshipRepo extends JpaRepository<Friendship, Integer>{
            "(f.user1 = :user OR f.user2 = :user) AND f.status = :status")
     List<Friendship> findByUserAndStatus(@Param("user") User user,
                                          @Param("status") FriendshipStatus status);
+    
 
     // Get all pending requests received by a user
-    @Query("SELECT f FROM Friendship f WHERE f.user2 = :user AND f.status = 'PENDING'")
-    List<Friendship> findPendingRequestsForUser(@Param("user") User user);
+//    @Query("SELECT f FROM Friendship f WHERE f.user2 = :user AND f.status = 'PENDING'")
+//    List<Friendship> findPendingRequestsForUser(@Param("user") User user);
+    
+    
+    
+ // Get all pending requests received by a user
+    @Query("SELECT f FROM Friendship f WHERE f.user2 = :user AND f.status = :status")
+    List<Friendship> findPendingRequestsForUser(@Param("user") User user, 
+                                                @Param("status") FriendshipStatus status);
+
+
+    // Endpoint 10: Count friends
+    @Query("SELECT COUNT(f) FROM Friendship f WHERE " +
+           "(f.user1.userId = :userId OR f.user2.userId = :userId) AND f.status = :status")
+    Integer countByUserIdAndStatus(@Param("userId") Integer userId, 
+                                   @Param("status") FriendshipStatus status);
+    
+    
 
 }
