@@ -11,17 +11,17 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "likes")
 public class Like {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int LikeId;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "postid")
 	private Post post;
-	
+
 	@ManyToOne
-	@JoinColumn(name ="userid")
+	@JoinColumn(name = "userid")
 	private User User;
 
 	public Like(int likeId, Post post, com.cg.entity.User user) {
@@ -52,8 +52,6 @@ public class Like {
 	}
 
 	public void setUser(User user) {
-        this.User = user;
-    }
+		this.User = user;
+	}
 }
-
-	
