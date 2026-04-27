@@ -1,42 +1,27 @@
-package com.cg.entity;
+package com.cg.dto;
+
 import java.sql.Timestamp;
 import java.util.List;
 
-import jakarta.persistence.*;
+public class PostDto {
 
-@Entity
-@Table(name = "posts")
-public class Post {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postID;
-
-    @Column(name = "content")
     private String content;
-
-    @Column(name = "timestamp")
     private Timestamp timestamp;
+    private UserDto user;
+    private List<CommentsDto> comments;
+    private List<LikeDto> likes;
 
-    @ManyToOne
-    @JoinColumn(name = "userID")
-    private User user;
+    public PostDto() {}
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private List<Comments> comments;
-
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private List<Like> likes;
-
-    public Post() {
-    }
-
-    public Post(Long postID, String content, Timestamp timestamp, User user) {
-        super();
+    public PostDto(Long postID, String content, Timestamp timestamp,
+                   UserDto user, List<CommentsDto> comments, List<LikeDto> likes) {
         this.postID = postID;
         this.content = content;
         this.timestamp = timestamp;
         this.user = user;
+        this.comments = comments;
+        this.likes = likes;
     }
 
     public Long getPostID() {
@@ -63,27 +48,27 @@ public class Post {
         this.timestamp = timestamp;
     }
 
-    public User getUser() {
+    public UserDTO getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserDto user) {
         this.user = user;
     }
 
-    public List<Comments> getComments() {
+    public List<CommentsDto> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comments> comments) {
+    public void setComments(List<CommentsDto> comments) {
         this.comments = comments;
     }
 
-    public List<Like> getLikes() {
+    public List<LikeDto> getLikes() {
         return likes;
     }
 
-    public void setLikes(List<Like> likes) {
+    public void setLikes(List<LikeDto> likes) {
         this.likes = likes;
     }
 }
