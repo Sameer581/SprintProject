@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.cg.entity.Like;
 
 @Repository
-public interface LikeRepo extends JpaRepository<Like, Integer> {
+public interface LikeRepo extends JpaRepository<Like, Long> {
 
     // Check if user already liked the post
     boolean existsByUserUserIDAndPostPostID(Long userId, Long postId);

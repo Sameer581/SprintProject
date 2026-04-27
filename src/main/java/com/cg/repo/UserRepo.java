@@ -1,5 +1,9 @@
 package com.cg.repo;
 
-public class UserRepo {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.cg.entity.User;
+
+public interface UserRepo extends JpaRepository<User, Long>{
 
 }
