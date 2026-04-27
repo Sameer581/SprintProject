@@ -1,22 +1,27 @@
 package com.cg.entity;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+import jakarta.persistence.*;
+
 @Entity
-@Table(name = "Comments")
+@Table(name = "comments")
 public class Comments {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "commentID")
+<<<<<<< HEAD
     private Integer commentID;
+=======
+    private Long commentID;
+>>>>>>> 26f938fe5dfa1c2b1ead5e61104464a56daeb59f
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "postID")
     private Post post;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userID")
     private User user;
 
@@ -25,12 +30,10 @@ public class Comments {
 
     @Column(name = "timestamp")
     private LocalDateTime timestamp;
-
     
-	public Comments() {
-	}
+	public Comments() {}
 
-	public Comments(int commentID, Post post, User user, String commentText, LocalDateTime timestamp) {
+	public Comments(Long commentID, Post post, User user, String commentText, LocalDateTime timestamp) {
 		super();
 		this.commentID = commentID;
 		this.post = post;
@@ -39,11 +42,11 @@ public class Comments {
 		this.timestamp = timestamp;
 	}
 
-	public int getCommentID() {
+	public Long getCommentID() {
 		return commentID;
 	}
 
-	public void setCommentID(int commentID) {
+	public void setCommentID(Long commentID) {
 		this.commentID = commentID;
 	}
 
@@ -78,6 +81,5 @@ public class Comments {
 	public void setTimestamp(LocalDateTime timestamp) {
 		this.timestamp = timestamp;
 	}
-    
-    
 }
+   

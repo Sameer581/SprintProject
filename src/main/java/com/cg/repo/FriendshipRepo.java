@@ -11,7 +11,8 @@ import com.cg.entity.Friendship;
 import com.cg.entity.User;
 import com.cg.enums.FriendshipStatus;
 
-public interface FriendshipRepo extends JpaRepository<Friendship, Integer>{
+
+public interface FriendshipRepo extends JpaRepository<Friendship, Long>{
 	
 	
 	// Check if a friendship already exists between two users (either direction)
@@ -40,12 +41,13 @@ public interface FriendshipRepo extends JpaRepository<Friendship, Integer>{
                                                 @Param("status") FriendshipStatus status);
 
 
+    
     // Endpoint 10: Count friends
     @Query("SELECT COUNT(f) FROM Friendship f WHERE " +
            "(f.user1.userId = :userId OR f.user2.userId = :userId) AND f.status = :status")
-    Integer countByUserIdAndStatus(@Param("userId") Integer userId, 
-                                   @Param("status") FriendshipStatus status);
+    Integer countByUserIdAndStatus(@Param("userId") Long userId,
+            @Param("status") FriendshipStatus status);
     
-    
+
 
 }

@@ -4,10 +4,10 @@ import com.cg.enums.FriendshipStatus;
 
 public class FriendshipDto {
 	
-	private Integer friendshipId; // Null for Requests, populated for Responses
-    private Integer userId1;      // Sender
+	private Long friendshipId; // Null for Requests, populated for Responses
+    private Long userId1;      // Sender
     private String username1;     // Populated for Responses
-    private Integer userId2;      // Receiver
+    private Long userId2;      // Receiver
     private String username2;     // Populated for Responses
     private FriendshipStatus status; // Populated for Responses and Updates
     
@@ -17,7 +17,7 @@ public class FriendshipDto {
 
     
     // Constructor for Sending a Request (FriendRequestDto equivalent)
-    public FriendshipDto(Integer userId1, Integer userId2) {
+    public FriendshipDto(Long userId1, Long userId2) {
         this.userId1 = userId1;
         this.userId2 = userId2;
     }
@@ -31,8 +31,8 @@ public class FriendshipDto {
     
 
     // All-args Constructor for Responses (FriendshipResponseDto equivalent)
-    public FriendshipDto(Integer friendshipId, Integer userId1, String username1, 
-                         Integer userId2, String username2, FriendshipStatus status) {
+    public FriendshipDto(Long friendshipId, Long userId1, String username1, 
+                         Long userId2, String username2, FriendshipStatus status) {
         this.friendshipId = friendshipId;
         this.userId1 = userId1;
         this.username1 = username1;
@@ -42,23 +42,25 @@ public class FriendshipDto {
     }
 
 
+    
     // Getters and Setters
-	public Integer getFriendshipId() {
+    
+	public Long getFriendshipId() {
 		return friendshipId;
 	}
 
 
-	public void setFriendshipId(Integer friendshipId) {
+	public void setFriendshipId(Long friendshipId) {
 		this.friendshipId = friendshipId;
 	}
 
 
-	public Integer getUserId1() {
+	public Long getUserId1() {
 		return userId1;
 	}
 
 
-	public void setUserId1(Integer userId1) {
+	public void setUserId1(Long userId1) {
 		this.userId1 = userId1;
 	}
 
@@ -73,12 +75,12 @@ public class FriendshipDto {
 	}
 
 
-	public Integer getUserId2() {
+	public Long getUserId2() {
 		return userId2;
 	}
 
 
-	public void setUserId2(Integer userId2) {
+	public void setUserId2(Long userId2) {
 		this.userId2 = userId2;
 	}
 
@@ -101,6 +103,6 @@ public class FriendshipDto {
 	public void setStatus(FriendshipStatus status) {
 		this.status = status;
 	}
-	
+  
 
 }
