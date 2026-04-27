@@ -1,4 +1,4 @@
-package com.cg.repository;
+package com.cg.repo;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.cg.entity.Notification;
 
 @Repository
-public interface NotificationRepository extends JpaRepository<Notification, Integer> {
+public interface NotificationRepo extends JpaRepository<Notification, Integer> {
 
     List<Notification> findByUserUserId(Integer userId);
 
