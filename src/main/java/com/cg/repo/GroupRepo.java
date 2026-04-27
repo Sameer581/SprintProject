@@ -9,7 +9,7 @@ import com.cg.entity.User;
 
 
 @Repository
-public interface GroupRepo extends JpaRepository<Group, Integer> {
+public interface GroupRepo extends JpaRepository<Group, Long> {
 	
 	List<Group> findByAdmin(User admin);
 	List<Group> findByAdminUserId(Integer adminId);
