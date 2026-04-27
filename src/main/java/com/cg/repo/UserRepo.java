@@ -1,4 +1,4 @@
-package com.cg.repository;
+package com.cg.repo;
 
 import java.util.Optional;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.cg.entity.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepo extends JpaRepository<User, Long> {
 
     // Find user by email (useful for login)
     Optional<User> findByEmail(String email);
