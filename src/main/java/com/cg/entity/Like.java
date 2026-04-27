@@ -52,7 +52,8 @@ public class Like {
 	}
 
 	public void setUser(User user) {
-		User = user;
-	}
+        this.User = user;
+    }
+}
 
 	

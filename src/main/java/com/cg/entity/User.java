@@ -33,7 +33,7 @@ public class User {
     private List<Comments> comments;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Likes> likes;
+    private List<Like> likes;
 
     public User() {
     }
