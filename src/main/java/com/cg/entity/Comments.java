@@ -10,7 +10,7 @@ public class Comments {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "commentID")
-    private int commentID;
+    private Integer commentID;
 
     @ManyToOne
     @JoinColumn(name = "postID")
