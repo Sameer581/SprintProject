@@ -27,6 +27,19 @@ public class UserServiceImpl implements UserService {
         User savedUser = userRepository.save(user);
         return convertToResponseDto(savedUser);
     }
+    
+    // POST - Bulk register
+    @Override
+    public void createAllUsers(List<UserDto> userDtos) {
+        List<User> users = userDtos.stream().map(dto -> {
+            User user = new User();
+            user.setUsername(dto.getUsername());
+            user.setEmail(dto.getEmail());
+            user.setPassword(dto.getPassword());
+            return user;
+        }).collect(Collectors.toList());
+        userRepository.saveAll(users);
+    }
 
     // GET BY ID
     @Override
