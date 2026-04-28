@@ -1,9 +1,13 @@
 package com.cg.repo;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.cg.entity.Comments;
+public interface CommentsRepo extends JpaRepository<Comments, Long> {
 
-public interface CommentsRepo extends JpaRepository<Comments, Integer>{
+    List<Comments> findByPost_PostID(Long postID);
 
+    List<Comments> findByUser_UserID(Long userID);
 }

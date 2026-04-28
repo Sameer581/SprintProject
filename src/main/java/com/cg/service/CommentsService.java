@@ -7,13 +7,13 @@ import com.cg.entity.Comments;
 
 public interface CommentsService {
 
-    public Integer addComment(CommentsDto dto);
+    public Long addComment(CommentsDto dto);
 
-    public Comments getComment(int commentID);
+    public Comments getComment(Long commentID);
 
     public List<Comments> getAllComments();
 
-    public List<Comments> getCommentsByPostID(int postID);
+    public List<Comments> getCommentsByPostID(Long postID);
 
-    public List<Comments> getCommentsByUserID(int userID);
+    public List<Comments> getCommentsByUserID(Long userID);
 }
