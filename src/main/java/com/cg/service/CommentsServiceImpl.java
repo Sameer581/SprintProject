@@ -66,7 +66,7 @@ public class CommentsServiceImpl implements CommentsService {
 
         Comments savedComment = commentsRepo.save(comment);
 
-        return savedComment.getCommentID();
+        return savedComment.getCommentId();
     }
 
     @Override
@@ -106,11 +106,11 @@ public class CommentsServiceImpl implements CommentsService {
 
         CommentResponseDto dto = new CommentResponseDto();
 
-        dto.setCommentID(comment.getCommentID());
+        dto.setCommentID(comment.getCommentId());
         dto.setCommentText(comment.getCommentText());
         dto.setTimestamp(comment.getTimestamp());
 
-        dto.setPostID(comment.getPost().getPostID());
+        dto.setPostID(comment.getPost().getPostId());
         dto.setPostContent(comment.getPost().getContent());
 
         dto.setUserID(comment.getUser().getUserID());

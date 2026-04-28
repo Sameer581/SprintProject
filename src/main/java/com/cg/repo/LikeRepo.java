@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.cg.entity.Like;
 
 @Repository
-public interface LikeRepo extends JpaRepository<Like, Long> {
+public interface LikeRepo extends JpaRepository<Like,Long> {
 
     boolean existsByUserUserIDAndPostPostID(Long userId, Long postId);
 

@@ -20,10 +20,10 @@ public class MessagesDto {
     private String messageText;
     private LocalDateTime timestamp;
 
-    public MessagesDTO() {
+    public MessagesDto() {
     }
 
-    public MessagesDTO(Long messageID, Long senderID, Long receiverID, String messageText, LocalDateTime timestamp) {
+    public MessagesDto(Long messageID, Long senderID, Long receiverID, String messageText, LocalDateTime timestamp) {
         this.messageID = messageID;
         this.senderID = senderID;
         this.receiverID = receiverID;

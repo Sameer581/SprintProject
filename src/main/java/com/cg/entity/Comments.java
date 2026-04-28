@@ -20,7 +20,7 @@ public class Comments {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "commentID")
-    private Long commentID;
+    private Long commentId;
 
     @ManyToOne
     @JoinColumn(name = "postID")
@@ -39,21 +39,21 @@ public class Comments {
     
 	public Comments() {}
 
-	public Comments(Long commentID, Post post, User user, String commentText, LocalDateTime timestamp) {
+	public Comments(Long commentId, Post post, User user, String commentText, LocalDateTime timestamp) {
 		super();
-		this.commentID = commentID;
+		this.commentId = commentId;
 		this.post = post;
 		this.user = user;
 		this.commentText = commentText;
 		this.timestamp = timestamp;
 	}
 
-	public Long getCommentID() {
-		return commentID;
+	public Long getCommentId() {
+		return commentId;
 	}
 
-	public void setCommentID(Long commentID) {
-		this.commentID = commentID;
+	public void setCommentId(Long commentId) {
+		this.commentId = commentId;
 	}
 
 	public Post getPost() {
@@ -84,8 +84,10 @@ public class Comments {
 		return timestamp;
 	}
 
-	public void setTimestamp(LocalDateTime string) {
-		this.timestamp = string;
+	public void setTimestamp(LocalDateTime timestamp) {
+		this.timestamp = timestamp;
 	}
 }
-   
+	
+
+	

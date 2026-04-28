@@ -14,7 +14,7 @@ public class Like {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int LikeId;
+	private Long LikeId;
 
 	@ManyToOne
 	@JoinColumn(name = "postid")
@@ -24,34 +24,33 @@ public class Like {
 	@JoinColumn(name = "userid")
 	private User user;
 
-	public Like(int likeId, Post post, com.cg.entity.User user) {
+	public Like() {
+		
+	}
+	public Like(Long likeId, Post post, User user) {
 		super();
 		LikeId = likeId;
 		this.post = post;
-		user = user;
+		this.user = user;
 	}
-
-	public int getLikeId() {
+	public Long getLikeId() {
 		return LikeId;
 	}
-
-	public void setLikeId(int likeId) {
+	public void setLikeId(Long likeId) {
 		LikeId = likeId;
 	}
-
 	public Post getPost() {
 		return post;
 	}
-
 	public void setPost(Post post) {
 		this.post = post;
 	}
-
 	public User getUser() {
 		return user;
 	}
-
 	public void setUser(User user) {
 		this.user = user;
 	}
 }
+
+	

@@ -52,7 +52,7 @@ public class CommentsServiceTest {
     @BeforeEach
     void setUp() {
         post = new Post();
-        post.setPostID(1L);
+        post.setPostId(1L);
         post.setContent("Test Post");
 
         user = new User();
@@ -60,7 +60,7 @@ public class CommentsServiceTest {
         user.setUsername("sameer");
 
         comment = new Comments();
-        comment.setCommentID(1L);
+        comment.setCommentId(1L);
         comment.setCommentText("Hello");
         comment.setPost(post);
         comment.setUser(user);
