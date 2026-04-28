@@ -1,24 +1,18 @@
 package com.cg.dto;
 
-public class UserDto {
+public class UserResponseDto {
 
     private Long userID;
     private String username;
     private String email;
-    private String password;
 
-    // 🔹 Default Constructor
-    public UserDto() {}
+    public UserResponseDto() {}
 
-    // 🔹 Parameterized Constructor
-    public UserDto(Long userID, String username, String email, String password) {
+    public UserResponseDto(Long userID, String username, String email) {
         this.userID = userID;
         this.username = username;
         this.email = email;
-        this.password = password;
     }
-
-    // 🔹 Getters and Setters
 
     public Long getUserID() {
         return userID;
@@ -42,13 +36,5 @@ public class UserDto {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 }
