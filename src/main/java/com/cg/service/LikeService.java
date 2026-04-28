@@ -7,4 +7,6 @@ public interface LikeService {
     LikeDto toggleLike(LikeDto likeDto);
 
     int countLikesByPost(Long postId);
+    
+    boolean hasUserLiked(Long userId, Long postId);
 }

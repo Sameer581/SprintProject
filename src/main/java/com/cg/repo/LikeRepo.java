@@ -8,9 +8,9 @@ import com.cg.entity.Like;
 @Repository
 public interface LikeRepo extends JpaRepository<Like, Long> {
 
-    boolean existsByUserUserIdAndPostPostId(Long userId, Long postId);
+    boolean existsByUserUserIDAndPostPostID(Long userId, Long postId);
 
-    int countByPostPostId(Long postId);
+    int countByPostPostID(Long postId);
 
-    void deleteByUserUserIdAndPostPostId(Long userId, Long postId);
+    void deleteByUserUserIDAndPostPostID(Long userId, Long postId);
 }

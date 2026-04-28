@@ -40,3 +40,12 @@ application.yml
 # Optional
 target/
 node_modules/
+
+
+# Eclipse / STS workspace (never commit)
+.metadata/
+
+# Common Java build/output
+target/
+bin/
+*.log

@@ -1,7 +1,5 @@
 package com.cg.entity;
 
-import java.sql.Timestamp;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,59 +12,46 @@ import jakarta.persistence.Table;
 @Table(name = "likes")
 public class Like {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long likeId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int LikeId;
 
-    @ManyToOne
-    @JoinColumn(name = "postid", nullable = false)
-    private Post post;
+	@ManyToOne
+	@JoinColumn(name = "postid")
+	private Post post;
 
-    @ManyToOne
-    @JoinColumn(name = "userid", nullable = false)
-    private User user;
+	@ManyToOne
+	@JoinColumn(name = "userid")
+	private User user;
 
-    private Timestamp timestamp;
+	public Like(int likeId, Post post, com.cg.entity.User user) {
+		super();
+		LikeId = likeId;
+		this.post = post;
+		user = user;
+	}
 
-    public Like() {
-    }
+	public int getLikeId() {
+		return LikeId;
+	}
 
-    public Like(Long likeId, Post post, User user, Timestamp timestamp) {
-        this.likeId = likeId;
-        this.post = post;
-        this.user = user;
-        this.timestamp = timestamp;
-    }
+	public void setLikeId(int likeId) {
+		LikeId = likeId;
+	}
 
-    public Long getLikeId() {
-        return likeId;
-    }
+	public Post getPost() {
+		return post;
+	}
 
-    public void setLikeId(Long likeId) {
-        this.likeId = likeId;
-    }
+	public void setPost(Post post) {
+		this.post = post;
+	}
 
-    public Post getPost() {
-        return post;
-    }
+	public User getUser() {
+		return user;
+	}
 
-    public void setPost(Post post) {
-        this.post = post;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Timestamp getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
-    }
+	public void setUser(User user) {
+		this.user = user;
+	}
 }
