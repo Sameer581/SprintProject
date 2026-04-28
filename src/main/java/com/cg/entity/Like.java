@@ -1,5 +1,7 @@
 package com.cg.entity;
 
+import java.sql.Timestamp;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,46 +14,59 @@ import jakarta.persistence.Table;
 @Table(name = "likes")
 public class Like {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int LikeId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long likeId;
 
-	@ManyToOne
-	@JoinColumn(name = "postid")
-	private Post post;
+    @ManyToOne
+    @JoinColumn(name = "postid", nullable = false)
+    private Post post;
 
-	@ManyToOne
-	@JoinColumn(name = "userid")
-	private User User;
+    @ManyToOne
+    @JoinColumn(name = "userid", nullable = false)
+    private User user;
 
-	public Like(int likeId, Post post, com.cg.entity.User user) {
-		super();
-		LikeId = likeId;
-		this.post = post;
-		User = user;
-	}
+    private Timestamp timestamp;
 
-	public int getLikeId() {
-		return LikeId;
-	}
+    public Like() {
+    }
 
-	public void setLikeId(int likeId) {
-		LikeId = likeId;
-	}
+    public Like(Long likeId, Post post, User user, Timestamp timestamp) {
+        this.likeId = likeId;
+        this.post = post;
+        this.user = user;
+        this.timestamp = timestamp;
+    }
 
-	public Post getPost() {
-		return post;
-	}
+    public Long getLikeId() {
+        return likeId;
+    }
 
-	public void setPost(Post post) {
-		this.post = post;
-	}
+    public void setLikeId(Long likeId) {
+        this.likeId = likeId;
+    }
 
-	public User getUser() {
-		return User;
-	}
+    public Post getPost() {
+        return post;
+    }
 
-	public void setUser(User user) {
-		this.User = user;
-	}
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
+    }
 }
