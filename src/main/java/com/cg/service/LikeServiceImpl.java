@@ -1,12 +1,12 @@
 package com.cg.service;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cg.dto.LikeDto;
 import com.cg.entity.Like;
@@ -28,6 +28,7 @@ public class LikeServiceImpl implements LikeService {
     @Autowired
     private PostRepo postRepo;
 
+    @Transactional
     @Override
     public LikeDto toggleLike(LikeDto likeDto) {
 
@@ -54,15 +55,14 @@ public class LikeServiceImpl implements LikeService {
             response.setTotalLikes(likeRepo.countByPostPostID(post.getPostId()));
             return response;
         }
+
         Like like = new Like();
         like.setUser(user);
         like.setPost(post);
-        like.setTimestamp(new Timestamp(new Date().getTime()));
 
         Like savedLike = likeRepo.save(like);
 
         response.setLikeId(savedLike.getLikeId());
-        response.setTimestamp(savedLike.getTimestamp());
         response.setMessage("Post liked successfully");
         response.setTotalLikes(likeRepo.countByPostPostID(post.getPostId()));
 
@@ -86,10 +86,9 @@ public class LikeServiceImpl implements LikeService {
         return likes.stream().map(like -> {
             LikeDto dto = new LikeDto();
             dto.setLikeId(like.getLikeId());
-            dto.setUserId(like.getUser().getUserID();
+            dto.setUserId(like.getUser().getUserID());
             dto.setPostId(like.getPost().getPostId());
-            dto.setTimestamp(like.getTimestamp());  
-            dto.setMessage("Like fetched successfully"); 
+            dto.setMessage("Like fetched successfully");
             dto.setTotalLikes(likeRepo.countByPostPostID(postId));
             return dto;
         }).toList();
@@ -104,9 +103,8 @@ public class LikeServiceImpl implements LikeService {
             dto.setLikeId(like.getLikeId());
             dto.setUserId(like.getUser().getUserID());
             dto.setPostId(like.getPost().getPostId());
-            dto.setTimestamp(like.getTimestamp());   
-            dto.setMessage("Like fetched successfully"); 
-            dto.setTotalLikes(likeRepo.countByPostPostID(like.getPost().getPostId())); 
+            dto.setMessage("Like fetched successfully");
+            dto.setTotalLikes(likeRepo.countByPostPostID(like.getPost().getPostId()));
             return dto;
         }).toList();
     }
