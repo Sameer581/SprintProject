@@ -39,20 +39,17 @@ public class LikeServiceImpl implements LikeService {
         response.setUserId(user.getUserID());
         response.setPostId(post.getPostID());
 
-
-        boolean alreadyLiked = likeRepo.existsByUserUserIdAndPostPostId(
+        boolean alreadyLiked = likeRepo.existsByUserUserIDAndPostPostID(
                 likeDto.getUserId(), likeDto.getPostId());
 
-
         if (alreadyLiked) {
-            likeRepo.deleteByUserUserIdAndPostPostId(
+            likeRepo.deleteByUserUserIDAndPostPostID(
                     likeDto.getUserId(), likeDto.getPostId());
 
             response.setMessage("Post unliked successfully");
-            response.setTotalLikes(likeRepo.countByPostPostId(post.getPostID()));
+            response.setTotalLikes(likeRepo.countByPostPostID(post.getPostID()));
             return response;
         }
-
 
         Like like = new Like();
         like.setUser(user);
@@ -64,13 +61,18 @@ public class LikeServiceImpl implements LikeService {
         response.setLikeId(savedLike.getLikeId());
         response.setTimestamp(savedLike.getTimestamp());
         response.setMessage("Post liked successfully");
-        response.setTotalLikes(likeRepo.countByPostPostId(post.getPostID()));
+        response.setTotalLikes(likeRepo.countByPostPostID(post.getPostID()));
 
         return response;
     }
 
     @Override
     public int countLikesByPost(Long postId) {
-        return likeRepo.countByPostPostId(postId);
+        return likeRepo.countByPostPostID(postId);
+    }
+
+    @Override
+    public boolean hasUserLiked(Long userId, Long postId) {
+        return likeRepo.existsByUserUserIDAndPostPostID(userId, postId);
     }
 }
