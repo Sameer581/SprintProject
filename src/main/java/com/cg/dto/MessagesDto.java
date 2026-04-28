@@ -2,7 +2,7 @@ package com.cg.dto;
 
 import java.time.LocalDateTime;
 
-public class MessagesDto {
+public class MessagesDTO {
 
     private Long messageID;
     private Long senderID;
@@ -10,10 +10,10 @@ public class MessagesDto {
     private String messageText;
     private LocalDateTime timestamp;
 
-    public MessagesDto() {
+    public MessagesDTO() {
     }
 
-    public MessagesDto(Long messageID, Long senderID, Long receiverID, String messageText, LocalDateTime timestamp) {
+    public MessagesDTO(Long messageID, Long senderID, Long receiverID, String messageText, LocalDateTime timestamp) {
         this.messageID = messageID;
         this.senderID = senderID;
         this.receiverID = receiverID;
