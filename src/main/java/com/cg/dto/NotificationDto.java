@@ -2,17 +2,17 @@ package com.cg.dto;
 
 import java.time.LocalDateTime;
 
-public class NotificationDTO {
+public class NotificationDto {
 
     private Integer notificationId;
     private Integer userId;
     private String content;
     private LocalDateTime timestamp;
 
-    public NotificationDTO() {
+    public NotificationDto() {
     }
 
-    public NotificationDTO(Integer notificationId, Integer userId, String content, LocalDateTime timestamp) {
+    public NotificationDto(Integer notificationId, Integer userId, String content, LocalDateTime timestamp) {
         this.notificationId = notificationId;
         this.userId = userId;
         this.content = content;
