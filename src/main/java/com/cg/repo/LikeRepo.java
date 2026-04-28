@@ -1,5 +1,7 @@
 package com.cg.repo;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,5 +14,9 @@ public interface LikeRepo extends JpaRepository<Like, Long> {
 
     int countByPostPostID(Long postId);
 
-    void deleteByUserUserIDAndPostPostID(Long userId, Long postId);
+    Like findByUserUserIDAndPostPostID(Long userId, Long postId);
+
+    List<Like> findByPostPostID(Long postId);
+
+    List<Like> findByUserUserID(Long userId);
 }
