@@ -2,20 +2,20 @@ package com.cg.dto;
 
 public class UserDto {
 
-    private Integer userID;
+    private Long userID;
     private String username;
     private String email;
 
     public UserDto() {}
 
-    public UserDto(Integer userID, String username, String email) {
+    public UserDto(Long userID, String username, String email) {
         this.userID = userID;
         this.username = username;
         this.email = email;
     }
 
-    public Integer getUserID() { return userID; }
-    public void setUserID(Integer userID) { this.userID = userID; }
+    public Long getUserID() { return userID; }
+    public void setUserID(Long userID) { this.userID = userID; }
 
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
