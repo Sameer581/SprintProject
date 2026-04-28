@@ -2,11 +2,22 @@ package com.cg.dto;
 
 import java.time.LocalDateTime;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+
+
 public class MessagesDto {
 
     private Long messageID;
+    
+    @NotNull
     private Long senderID;
-    private Long receiverID;
+    
+    @NotNull
+    private  Long receiverID;
+   
+    @NotBlank
     private String messageText;
     private LocalDateTime timestamp;
 

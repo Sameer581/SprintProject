@@ -48,7 +48,7 @@ public class PostDto {
         this.timestamp = timestamp;
     }
 
-    public UserDTO getUser() {
+    public UserDto getUser() {
         return user;
     }
 

@@ -2,6 +2,8 @@ package com.cg.entity;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,10 +19,12 @@ public class Notification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer notificationId;
+    private Long notificationId;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
+
     private User user;
 
     @Column(columnDefinition = "TEXT")
@@ -28,37 +32,45 @@ public class Notification {
 
     private LocalDateTime timestamp;
 
-	public Integer getNotificationId() {
-		return notificationId;
-	}
+    public Notification() {
+    }
 
-	public void setNotificationId(Integer notificationId) {
-		this.notificationId = notificationId;
-	}
+    public Notification(Long notificationId, User user, String content, LocalDateTime timestamp) {
+        this.notificationId = notificationId;
+        this.user = user;
+        this.content = content;
+        this.timestamp = timestamp;
+    }
 
-	public User getUser() {
-		return user;
-	}
+    public Long getNotificationId() {
+        return notificationId;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public void setNotificationId(Long notificationId) {
+        this.notificationId = notificationId;
+    }
 
-	public String getContent() {
-		return content;
-	}
+    public User getUser() {
+        return user;
+    }
 
-	public void setContent(String content) {
-		this.content = content;
-	}
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-	public LocalDateTime getTimestamp() {
-		return timestamp;
-	}
+    public String getContent() {
+        return content;
+    }
 
-	public void setTimestamp(LocalDateTime timestamp) {
-		this.timestamp = timestamp;
-	}
-    
-    
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
 }
