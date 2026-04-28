@@ -16,7 +16,9 @@ public interface FriendshipService {
 	 FriendshipDto acceptFriendRequest(Long friendshipId);                
 	 
 	 // rejecting friend request
-	 void rejectFriendRequest(Long friendshipId);
+//	 void rejectFriendRequest(Long friendshipId);
+	 
+	  void rejectFriendRequest(Long friendshipId);
 	 
 	 // get all pending requests from users
 	 List<FriendshipDto> getPendingRequests(Long userId);
@@ -30,10 +32,10 @@ public interface FriendshipService {
 	 // finding list of all friendships
 	 List<FriendshipDto> getAllFriendships();                            
 	    
-	 FriendshipDto checkFriendship(Integer userId1, Integer userId2);   
+	 FriendshipDto checkFriendship(Long userId1, Long userId2);   
 	    
 	 // get number of friends count
-	 Integer getFriendsCount(Integer userId);                           
+	 Integer getFriendsCount(Long userId);                           
 
 	 // deleting/removing friend
 	 // void removeFriend(Integer friendshipId);
