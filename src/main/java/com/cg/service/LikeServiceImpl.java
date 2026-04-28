@@ -1,7 +1,9 @@
 package com.cg.service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,14 +45,15 @@ public class LikeServiceImpl implements LikeService {
                 likeDto.getUserId(), likeDto.getPostId());
 
         if (alreadyLiked) {
-            likeRepo.deleteByUserUserIDAndPostPostID(
+            Like existingLike = likeRepo.findByUserUserIDAndPostPostID(
                     likeDto.getUserId(), likeDto.getPostId());
+
+            likeRepo.delete(existingLike);
 
             response.setMessage("Post unliked successfully");
             response.setTotalLikes(likeRepo.countByPostPostID(post.getPostID()));
             return response;
         }
-
         Like like = new Like();
         like.setUser(user);
         like.setPost(post);
@@ -74,5 +77,37 @@ public class LikeServiceImpl implements LikeService {
     @Override
     public boolean hasUserLiked(Long userId, Long postId) {
         return likeRepo.existsByUserUserIDAndPostPostID(userId, postId);
+    }
+
+    @Override
+    public List<LikeDto> getLikesByPost(Long postId) {
+        List<Like> likes = likeRepo.findByPostPostID(postId);
+
+        return likes.stream().map(like -> {
+            LikeDto dto = new LikeDto();
+            dto.setLikeId(like.getLikeId());
+            dto.setUserId(like.getUser().getUserID());
+            dto.setPostId(like.getPost().getPostID());
+            dto.setTimestamp(like.getTimestamp());  
+            dto.setMessage("Like fetched successfully"); 
+            dto.setTotalLikes(likeRepo.countByPostPostID(postId));
+            return dto;
+        }).toList();
+    }
+
+    @Override
+    public List<LikeDto> getLikesByUser(Long userId) {
+        List<Like> likes = likeRepo.findByUserUserID(userId);
+
+        return likes.stream().map(like -> {
+            LikeDto dto = new LikeDto();
+            dto.setLikeId(like.getLikeId());
+            dto.setUserId(like.getUser().getUserID());
+            dto.setPostId(like.getPost().getPostID());
+            dto.setTimestamp(like.getTimestamp());   
+            dto.setMessage("Like fetched successfully"); 
+            dto.setTotalLikes(likeRepo.countByPostPostID(like.getPost().getPostID())); 
+            return dto;
+        }).toList();
     }
 }

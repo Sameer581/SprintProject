@@ -1,6 +1,7 @@
 package com.cg.web;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +60,15 @@ public class LikeController {
                 errors.put(error.getField(), error.getDefaultMessage()));
 
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+    
+    @GetMapping("/post/{postId}")
+    public ResponseEntity<List<LikeDto>> getLikesByPost(@PathVariable Long postId) {
+        return new ResponseEntity<>(likeService.getLikesByPost(postId), HttpStatus.OK);
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<LikeDto>> getLikesByUser(@PathVariable Long userId) {
+        return new ResponseEntity<>(likeService.getLikesByUser(userId), HttpStatus.OK);
     }
 }
