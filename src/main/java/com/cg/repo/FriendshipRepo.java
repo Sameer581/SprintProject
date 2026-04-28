@@ -42,12 +42,14 @@ public interface FriendshipRepo extends JpaRepository<Friendship, Long>{
 
 
     
-    // Endpoint 10: Count friends
-    @Query("SELECT COUNT(f) FROM Friendship f WHERE " +
-           "(f.user1.userId = :userId OR f.user2.userId = :userId) AND f.status = :status")
-    Integer countByUserIdAndStatus(@Param("userId") Long userId,
-            @Param("status") FriendshipStatus status);
-    
+    @Query("""
+    	    SELECT COUNT(f)
+    	    FROM Friendship f
+    	    WHERE (f.user1.userID = :userId OR f.user2.userID = :userId)
+    	      AND f.status = :status
+    	""")
+    	long countByUserIdAndStatus(@Param("userId") Long userId,
+    	                            @Param("status") FriendshipStatus status);    
 
 
 }
