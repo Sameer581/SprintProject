@@ -2,14 +2,29 @@ package com.cg.dto;
 
 import com.cg.enums.FriendshipStatus;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+
+
 public class FriendshipDto {
 	
-	private Long friendshipId; // Null for Requests, populated for Responses
+	private Long friendshipId; // Null for Requests, populated for Responses only
+	
+	@NotNull(message = "Sender userId1 cannot be null")
+	@Min(value = 1, message = "UserId must be greater than 0")
     private Long userId1;      // Sender
+	
     private String username1;     // Populated for Responses
+    
+    
+    @NotNull(message = "Receiver userId2 cannot be null")
+    @Min(value = 1, message = "UserId must be greater than 0")
     private Long userId2;      // Receiver
+    
     private String username2;     // Populated for Responses
+    
     private FriendshipStatus status; // Populated for Responses and Updates
+    
     
     
     // No-args constructor (Required for JSON mapping)
