@@ -4,15 +4,17 @@ import java.time.LocalDateTime;
 
 public class CommentsDto {
 
+
     private Long commentID;
     private Long postID;
     private Long userID;
+
     private String commentText;
     private LocalDateTime timestamp;
 
     public CommentsDto() {}
     
-	public CommentsDto(Long commentID, Long postID, Long userID, String commentText, LocalDateTime timestamp) {
+    public CommentsDto(Long commentID, Long postID, Long userID, String commentText, LocalDateTime timestamp) {
 		super();
 		this.commentID = commentID;
 		this.postID = postID;
@@ -21,8 +23,8 @@ public class CommentsDto {
 		this.timestamp = timestamp;
 	}
 
-
-
+    
+    // getters and setters
 	public Long getCommentID() {
 		return commentID;
 	}
@@ -62,5 +64,9 @@ public class CommentsDto {
 	public void setTimestamp(LocalDateTime timestamp) {
 		this.timestamp = timestamp;
 	}
+    
+    
+  
 	}
     
+

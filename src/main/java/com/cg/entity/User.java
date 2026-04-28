@@ -50,6 +50,8 @@ public class User {
 		this.likes = likes;
 	}
 
+	
+	// getters and setters
 	public Long getUserID() {
 		return userID;
 	}
@@ -113,7 +115,9 @@ public class User {
 	public void setLikes(List<Like> likes) {
 		this.likes = likes;
 	}
+
 	
 	
 }
     
+

@@ -13,6 +13,7 @@ public class Comments {
     @Column(name = "commentID")
     private Long commentID;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "postID")
     private Post post;
