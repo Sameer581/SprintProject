@@ -12,6 +12,8 @@ import com.cg.dto.UserDto;
 import com.cg.dto.UserResponseDto;
 import com.cg.service.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -21,7 +23,7 @@ public class UserController {
 
     // POST /users/register
     @PostMapping("/register")
-    public ResponseEntity<SuccessMessageDto> registerUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<SuccessMessageDto> registerUser(@Valid @RequestBody UserDto userDto) {
         UserResponseDto created = userService.createUser(userDto);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new SuccessMessageDto("User registered successfully", created.getUserID()));
