@@ -2,7 +2,16 @@ package com.cg.entity;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "comments")
@@ -13,11 +22,11 @@ public class Comments {
     @Column(name = "commentID")
     private Long commentID;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "postID")
     private Post post;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "userID")
     private User user;
 
@@ -25,6 +34,7 @@ public class Comments {
     private String commentText;
 
     @Column(name = "timestamp")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime timestamp;
     
 	public Comments() {}
@@ -74,8 +84,8 @@ public class Comments {
 		return timestamp;
 	}
 
-	public void setTimestamp(LocalDateTime timestamp) {
-		this.timestamp = timestamp;
+	public void setTimestamp(LocalDateTime string) {
+		this.timestamp = string;
 	}
 }
    

@@ -2,37 +2,26 @@ package com.cg.dto;
 
 import java.time.LocalDateTime;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class CommentsDto {
-
-
-    private Long commentID;
+	@NotNull
     private Long postID;
+	@NotNull
     private Long userID;
-
-    private String commentText;
-    private LocalDateTime timestamp;
+    @NotBlank
+	private String commentText;
 
     public CommentsDto() {}
     
-    public CommentsDto(Long commentID, Long postID, Long userID, String commentText, LocalDateTime timestamp) {
+	public CommentsDto(Long postID, Long userID, String commentText) {
 		super();
-		this.commentID = commentID;
 		this.postID = postID;
 		this.userID = userID;
 		this.commentText = commentText;
-		this.timestamp = timestamp;
 	}
-
-    
-    // getters and setters
-	public Long getCommentID() {
-		return commentID;
-	}
-
-	public void setCommentID(Long commentID) {
-		this.commentID = commentID;
-	}
-
+	
 	public Long getPostID() {
 		return postID;
 	}
@@ -57,16 +46,5 @@ public class CommentsDto {
 		this.commentText = commentText;
 	}
 
-	public LocalDateTime getTimestamp() {
-		return timestamp;
-	}
-
-	public void setTimestamp(LocalDateTime timestamp) {
-		this.timestamp = timestamp;
 	}
     
-    
-  
-	}
-    
-

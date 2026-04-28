@@ -2,18 +2,21 @@ package com.cg.service;
 
 import java.util.List;
 
+import com.cg.dto.CommentResponseDto;
+import com.cg.dto.CommentUpdateDto;
 import com.cg.dto.CommentsDto;
-import com.cg.entity.Comments;
 
 public interface CommentsService {
 
     public Long addComment(CommentsDto dto);
 
-    public Comments getComment(Long commentID);
+    public CommentResponseDto getComment(Long commentID);
 
-    public List<Comments> getAllComments();
+    public List<CommentResponseDto> getAllComments();
 
-    public List<Comments> getCommentsByPostID(Long postID);
+    public List<CommentResponseDto> getCommentsByPostID(Long postID);
 
-    public List<Comments> getCommentsByUserID(Long userID);
+    public List<CommentResponseDto> getCommentsByUserID(Long userID);
+    
+   public CommentResponseDto updateComment(Long commentID, CommentUpdateDto dto);
 }
