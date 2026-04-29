@@ -19,11 +19,11 @@ public class Like {
     private Long likeId;
 
     @ManyToOne
-    @JoinColumn(name = "postid", nullable = false)
+    @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
     @ManyToOne
-    @JoinColumn(name = "userid", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     private Timestamp timestamp;

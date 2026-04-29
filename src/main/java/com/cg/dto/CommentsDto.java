@@ -7,44 +7,40 @@ import jakarta.validation.constraints.NotNull;
 
 public class CommentsDto {
 	@NotNull
-    private Long postID;
+    private Long postId;
 	@NotNull
-    private Long userID;
+    private Long userId;
     @NotBlank
 	private String commentText;
-
-    public CommentsDto() {}
     
-	public CommentsDto(Long postID, Long userID, String commentText) {
+	public CommentsDto() {
+
+	}
+	public CommentsDto(@NotNull Long postId, @NotNull Long userId, @NotBlank String commentText) {
 		super();
-		this.postID = postID;
-		this.userID = userID;
+		this.postId = postId;
+		this.userId = userId;
 		this.commentText = commentText;
 	}
-	
-	public Long getPostID() {
-		return postID;
+	public Long getPostId() {
+		return postId;
 	}
-
-	public void setPostID(Long postID) {
-		this.postID = postID;
+	public void setPostId(Long postId) {
+		this.postId = postId;
 	}
-
-	public Long getUserID() {
-		return userID;
+	public Long getUserId() {
+		return userId;
 	}
-
-	public void setUserID(Long userID) {
-		this.userID = userID;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
-
 	public String getCommentText() {
 		return commentText;
 	}
-
 	public void setCommentText(String commentText) {
 		this.commentText = commentText;
 	}
-
-	}
+	
+}
+    
     

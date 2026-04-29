@@ -10,7 +10,7 @@ import com.cg.entity.Comments;
 public interface CommentsRepo extends JpaRepository<Comments, Long> {
 	@Query("""
 			SELECT new com.cg.dto.CommentResponseDto(
-			    c.commentID,
+			    c.commentId,
 			    c.commentText,
 			    c.timestamp,
 			    p.postId,
@@ -23,8 +23,8 @@ public interface CommentsRepo extends JpaRepository<Comments, Long> {
 			JOIN c.user u
 			""")
 			List<CommentResponseDto> findAllCommentsDto();
+	
+    List<Comments> findByUser_UserId(Long userId);
 
-    List<Comments> findByPost_PostID(Long postID);
-
-    List<Comments> findByUser_UserID(Long userID);
+	List<Comments> findByPost_PostId(Long postId);
 }

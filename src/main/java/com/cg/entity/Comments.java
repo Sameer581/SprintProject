@@ -19,15 +19,15 @@ public class Comments {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "commentID")
+    @Column(name = "comment_id")
     private Long commentId;
 
     @ManyToOne
-    @JoinColumn(name = "postID")
+    @JoinColumn(name = "post_id")
     private Post post;
 
     @ManyToOne
-    @JoinColumn(name = "userID")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Column(name = "comment_text")

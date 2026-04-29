@@ -56,7 +56,7 @@ public class CommentsServiceTest {
         post.setContent("Test Post");
 
         user = new User();
-        user.setUserID(1L);
+        user.setUserId(1L);
         user.setUsername("sameer");
 
         comment = new Comments();
@@ -77,7 +77,7 @@ public class CommentsServiceTest {
         Mockito.when(userRepo.findById(1L)).thenReturn(Optional.of(user));
         Mockito.when(commentsRepo.save(any(Comments.class))).thenReturn(comment);
 
-        Long result = service.addComment(dto);
+        CommentResponseDto result = service.addComment(dto);
 
         assertEquals(1L, result);
         verify(commentsRepo, times(1)).save(any());
@@ -102,7 +102,7 @@ public class CommentsServiceTest {
         CommentResponseDto result = service.getComment(1L);
 
         assertEquals("Hello", result.getCommentText());
-        assertEquals(1L, result.getUserID());
+        assertEquals(1L, result.getUserId());
     }
     @Test
     void testGetComment_notFound() {

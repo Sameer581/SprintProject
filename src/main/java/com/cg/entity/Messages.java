@@ -11,16 +11,16 @@ public class Messages {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "messageID")
+    @Column(name = "message_id")
     private Long messageID;
 
     @ManyToOne
-    @JoinColumn(name = "senderID", nullable = false)
+    @JoinColumn(name = "sender_id", nullable = false)
     @JsonIgnore
     private User sender;
 
     @ManyToOne
-    @JoinColumn(name = "receiverID", nullable = false)
+    @JoinColumn(name = "receiver_id", nullable = false)
     @JsonIgnore
     private User receiver;
 
