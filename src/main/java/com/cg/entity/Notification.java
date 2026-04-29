@@ -24,8 +24,7 @@ public class Notification {
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
-
-    private User user;
+    private User userId;
 
     @Column(columnDefinition = "TEXT")
     private String content;
@@ -35,9 +34,9 @@ public class Notification {
     public Notification() {
     }
 
-    public Notification(Long notificationId, User user, String content, LocalDateTime timestamp) {
+    public Notification(Long notificationId, User userId, String content, LocalDateTime timestamp) {
         this.notificationId = notificationId;
-        this.user = user;
+        this.userId = userId;
         this.content = content;
         this.timestamp = timestamp;
     }
@@ -50,12 +49,12 @@ public class Notification {
         this.notificationId = notificationId;
     }
 
-    public User getUser() {
-        return user;
+    public User getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(User userId) {
+        this.userId = userId;
     }
 
     public String getContent() {

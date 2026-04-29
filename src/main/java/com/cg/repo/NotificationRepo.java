@@ -10,6 +10,6 @@ import com.cg.entity.Notification;
 @Repository
 public interface NotificationRepo extends JpaRepository<Notification, Long> {
 
-    List<Notification> findByUserUserID(Long userID);
-    long countByUserUserID(Long userID);
+    List<Notification> findByUserUserId(Long userId);
+    long countByUserUserId(Long userId);
 }
