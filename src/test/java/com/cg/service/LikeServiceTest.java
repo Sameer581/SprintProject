@@ -24,8 +24,6 @@ import com.cg.entity.User;
 import com.cg.repo.LikeRepo;
 import com.cg.repo.PostRepo;
 import com.cg.repo.UserRepo;
-import com.cg.service.LikeService;
-import com.cg.service.LikeServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 class LikeServiceTest {
@@ -40,7 +38,7 @@ class LikeServiceTest {
     private PostRepo postRepo;
 
     @InjectMocks
-    private LikeService service = new LikeServiceImpl();
+    private LikeServiceImpl service;
 
     private User user;
     private Post post;
@@ -49,7 +47,7 @@ class LikeServiceTest {
     @BeforeEach
     void setUp() {
         user = new User();
-        user.setUserID(1L);
+        user.setUserId(1L);
         user.setUsername("Shruti");
 
         post = new Post();
@@ -71,9 +69,9 @@ class LikeServiceTest {
 
         when(userRepo.findById(1L)).thenReturn(Optional.of(user));
         when(postRepo.findById(1L)).thenReturn(Optional.of(post));
-        when(likeRepo.existsByUserUserIDAndPostPostID(1L, 1L)).thenReturn(false);
+        when(likeRepo.existsByUserUserIdAndPostPostId(1L, 1L)).thenReturn(false);
         when(likeRepo.save(any(Like.class))).thenReturn(like);
-        when(likeRepo.countByPostPostID(1L)).thenReturn(1);
+        when(likeRepo.countByPostPostId(1L)).thenReturn(1);
 
         LikeDto result = service.toggleLike(dto);
 
@@ -90,9 +88,9 @@ class LikeServiceTest {
 
         when(userRepo.findById(1L)).thenReturn(Optional.of(user));
         when(postRepo.findById(1L)).thenReturn(Optional.of(post));
-        when(likeRepo.existsByUserUserIDAndPostPostID(1L, 1L)).thenReturn(true);
-        when(likeRepo.findByUserUserIDAndPostPostID(1L, 1L)).thenReturn(like);
-        when(likeRepo.countByPostPostID(1L)).thenReturn(0);
+        when(likeRepo.existsByUserUserIdAndPostPostId(1L, 1L)).thenReturn(true);
+        when(likeRepo.findByUserUserIdAndPostPostId(1L, 1L)).thenReturn(like);
+        when(likeRepo.countByPostPostId(1L)).thenReturn(0);
 
         LikeDto result = service.toggleLike(dto);
 
@@ -103,7 +101,7 @@ class LikeServiceTest {
 
     @Test
     void testCountLikesByPost() {
-        when(likeRepo.countByPostPostID(1L)).thenReturn(5);
+        when(likeRepo.countByPostPostId(1L)).thenReturn(5);
 
         int result = service.countLikesByPost(1L);
 
@@ -112,7 +110,7 @@ class LikeServiceTest {
 
     @Test
     void testHasUserLiked_true() {
-        when(likeRepo.existsByUserUserIDAndPostPostID(1L, 1L)).thenReturn(true);
+        when(likeRepo.existsByUserUserIdAndPostPostId(1L, 1L)).thenReturn(true);
 
         boolean result = service.hasUserLiked(1L, 1L);
 
@@ -121,7 +119,7 @@ class LikeServiceTest {
 
     @Test
     void testHasUserLiked_false() {
-        when(likeRepo.existsByUserUserIDAndPostPostID(1L, 1L)).thenReturn(false);
+        when(likeRepo.existsByUserUserIdAndPostPostId(1L, 1L)).thenReturn(false);
 
         boolean result = service.hasUserLiked(1L, 1L);
 
@@ -130,8 +128,8 @@ class LikeServiceTest {
 
     @Test
     void testGetLikesByPost() {
-        when(likeRepo.findByPostPostID(1L)).thenReturn(List.of(like));
-        when(likeRepo.countByPostPostID(1L)).thenReturn(1);
+        when(likeRepo.findByPostPostId(1L)).thenReturn(List.of(like));
+        when(likeRepo.countByPostPostId(1L)).thenReturn(1);
 
         List<LikeDto> result = service.getLikesByPost(1L);
 
@@ -142,8 +140,8 @@ class LikeServiceTest {
 
     @Test
     void testGetLikesByUser() {
-        when(likeRepo.findByUserUserID(1L)).thenReturn(List.of(like));
-        when(likeRepo.countByPostPostID(1L)).thenReturn(1);
+        when(likeRepo.findByUserUserId(1L)).thenReturn(List.of(like));
+        when(likeRepo.countByPostPostId(1L)).thenReturn(1);
 
         List<LikeDto> result = service.getLikesByUser(1L);
 
