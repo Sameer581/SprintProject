@@ -28,8 +28,8 @@ public class LikeServiceImpl implements LikeService {
     @Autowired
     private PostRepo postRepo;
 
-    @Transactional
     @Override
+    @Transactional
     public LikeDto toggleLike(LikeDto likeDto) {
 
         User user = userRepo.findById(likeDto.getUserId())
@@ -59,10 +59,12 @@ public class LikeServiceImpl implements LikeService {
         Like like = new Like();
         like.setUser(user);
         like.setPost(post);
+        like.setTimestamp(new Timestamp(new Date().getTime()));
 
         Like savedLike = likeRepo.save(like);
 
         response.setLikeId(savedLike.getLikeId());
+        response.setTimestamp(savedLike.getTimestamp());
         response.setMessage("Post liked successfully");
         response.setTotalLikes(likeRepo.countByPostPostID(post.getPostId()));
 
@@ -88,6 +90,7 @@ public class LikeServiceImpl implements LikeService {
             dto.setLikeId(like.getLikeId());
             dto.setUserId(like.getUser().getUserID());
             dto.setPostId(like.getPost().getPostId());
+            dto.setTimestamp(like.getTimestamp());
             dto.setMessage("Like fetched successfully");
             dto.setTotalLikes(likeRepo.countByPostPostID(postId));
             return dto;
@@ -103,6 +106,7 @@ public class LikeServiceImpl implements LikeService {
             dto.setLikeId(like.getLikeId());
             dto.setUserId(like.getUser().getUserID());
             dto.setPostId(like.getPost().getPostId());
+            dto.setTimestamp(like.getTimestamp());
             dto.setMessage("Like fetched successfully");
             dto.setTotalLikes(likeRepo.countByPostPostID(like.getPost().getPostId()));
             return dto;
