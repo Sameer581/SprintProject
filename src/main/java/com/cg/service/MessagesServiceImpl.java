@@ -57,21 +57,11 @@ public class MessagesServiceImpl implements MessagesService {
         message.setReceiver(receiver);
 
         Messages savedMessage = messagesRepo.save(message);
-<<<<<<< HEAD
-        return savedMessage.getMessageID();
-    }
-
-    @Override
-    public List<Messages> getMessagesBySenderID(Long senderID) {
-        return messagesRepo.findBySenderUserID(senderID);
-    }
-
-    @Override
-    public List<Messages> getMessagesByReceiverID(Long receiverID) {
-        return messagesRepo.findByReceiverUserID(receiverID);
 
         return savedMessage.getMessageId();
     }
+
+   
 
     @Override
     public List<Messages> getMessagesBySenderId(Long senderId) {
