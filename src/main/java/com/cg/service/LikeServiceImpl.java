@@ -39,20 +39,20 @@ public class LikeServiceImpl implements LikeService {
                 .orElseThrow(() -> new RuntimeException("Post not found"));
 
         LikeDto response = new LikeDto();
-        response.setUserId(user.getUserID());
+        response.setUserId(user.getUserId());
         response.setPostId(post.getPostId());
 
-        boolean alreadyLiked = likeRepo.existsByUserUserIDAndPostPostID(
+        boolean alreadyLiked = likeRepo.existsByUserUserIdAndPostPostId(
                 likeDto.getUserId(), likeDto.getPostId());
 
         if (alreadyLiked) {
-            Like existingLike = likeRepo.findByUserUserIDAndPostPostID(
+            Like existingLike = likeRepo.findByUserUserIdAndPostPostId(
                     likeDto.getUserId(), likeDto.getPostId());
 
             likeRepo.delete(existingLike);
 
             response.setMessage("Post unliked successfully");
-            response.setTotalLikes(likeRepo.countByPostPostID(post.getPostId()));
+            response.setTotalLikes(likeRepo.countByPostPostId(post.getPostId()));
             return response;
         }
 
@@ -66,49 +66,49 @@ public class LikeServiceImpl implements LikeService {
         response.setLikeId(savedLike.getLikeId());
         response.setTimestamp(savedLike.getTimestamp());
         response.setMessage("Post liked successfully");
-        response.setTotalLikes(likeRepo.countByPostPostID(post.getPostId()));
+        response.setTotalLikes(likeRepo.countByPostPostId(post.getPostId()));
 
         return response;
     }
 
     @Override
     public int countLikesByPost(Long postId) {
-        return likeRepo.countByPostPostID(postId);
+        return likeRepo.countByPostPostId(postId);
     }
 
     @Override
     public boolean hasUserLiked(Long userId, Long postId) {
-        return likeRepo.existsByUserUserIDAndPostPostID(userId, postId);
+        return likeRepo.existsByUserUserIdAndPostPostId(userId, postId);
     }
 
     @Override
     public List<LikeDto> getLikesByPost(Long postId) {
-        List<Like> likes = likeRepo.findByPostPostID(postId);
+        List<Like> likes = likeRepo.findByPostPostId(postId);
 
         return likes.stream().map(like -> {
             LikeDto dto = new LikeDto();
             dto.setLikeId(like.getLikeId());
-            dto.setUserId(like.getUser().getUserID());
+            dto.setUserId(like.getUser().getUserId());
             dto.setPostId(like.getPost().getPostId());
             dto.setTimestamp(like.getTimestamp());
             dto.setMessage("Like fetched successfully");
-            dto.setTotalLikes(likeRepo.countByPostPostID(postId));
+            dto.setTotalLikes(likeRepo.countByPostPostId(postId));
             return dto;
         }).toList();
     }
 
     @Override
     public List<LikeDto> getLikesByUser(Long userId) {
-        List<Like> likes = likeRepo.findByUserUserID(userId);
+        List<Like> likes = likeRepo.findByUserUserId(userId);
 
         return likes.stream().map(like -> {
             LikeDto dto = new LikeDto();
             dto.setLikeId(like.getLikeId());
-            dto.setUserId(like.getUser().getUserID());
+            dto.setUserId(like.getUser().getUserId());
             dto.setPostId(like.getPost().getPostId());
             dto.setTimestamp(like.getTimestamp());
             dto.setMessage("Like fetched successfully");
-            dto.setTotalLikes(likeRepo.countByPostPostID(like.getPost().getPostId()));
+            dto.setTotalLikes(likeRepo.countByPostPostId(like.getPost().getPostId()));
             return dto;
         }).toList();
     }

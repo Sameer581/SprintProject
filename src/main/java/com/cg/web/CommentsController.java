@@ -40,10 +40,8 @@ public class CommentsController {
         if (br.hasErrors()) {
             throw new ValidationException(br.getFieldErrors());
         }
-
-        Long cid = commentsService.addComment(dto);
-
-        return new SuccessMessageDto("Comment added successfully with id ", cid);
+        CommentResponseDto response = commentsService.addComment(dto);
+        return new SuccessMessageDto("Comment added successfully with id ", response.getCommentId());
     }
 
     @PutMapping("/{id}")

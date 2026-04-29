@@ -8,15 +8,15 @@ import com.cg.dto.CommentsDto;
 
 public interface CommentsService {
 
-    public Long addComment(CommentsDto dto);
+    CommentResponseDto addComment(CommentsDto dto);
 
-    public CommentResponseDto getComment(Long commentID);
+    CommentResponseDto getComment(Long commentId);
 
-    public List<CommentResponseDto> getAllComments();
+    List<CommentResponseDto> getAllComments();
 
-    public List<CommentResponseDto> getCommentsByPostID(Long postID);
+    List<CommentResponseDto> getCommentsByPostId(Long postId);
 
-    public List<CommentResponseDto> getCommentsByUserID(Long userID);
+    List<CommentResponseDto> getCommentsByUserId(Long userId);
     
-   public CommentResponseDto updateComment(Long commentID, CommentUpdateDto dto);
+    CommentResponseDto updateComment(Long commentId, CommentUpdateDto dto);
 }

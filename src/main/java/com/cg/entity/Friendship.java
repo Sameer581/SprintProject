@@ -28,8 +28,6 @@ public class Friendship {
     @JoinColumn(name = "user_id2")
     private User user2;
 
-    
-    // Store an enum value in DB
     @Enumerated(EnumType.STRING)
     private FriendshipStatus status;
 

@@ -2,7 +2,6 @@ package com.cg.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,13 +31,11 @@ public class CommentsServiceImpl implements CommentsService {
     private UserRepo userRepo;
 
     @Override
-    public CommentResponseDto getComment(Long commentID) {
-        Optional<Comments> optComment = commentsRepo.findById(commentID);
+    public CommentResponseDto getComment(Long commentId) {
+        Comments comment = commentsRepo.findById(commentId)
+                .orElseThrow(() -> new NotAvailableException("Comment not found " + commentId));
 
-        if (optComment.isPresent()) {
-            return mapToDto(optComment.get());
-        }
-        throw new NotAvailableException("Comment not found " + commentID);
+        return mapToDto(comment);
     }
 
     @Override
@@ -47,46 +44,42 @@ public class CommentsServiceImpl implements CommentsService {
     }
 
     @Override
-    public Long addComment(CommentsDto dto) {
+    public CommentResponseDto addComment(CommentsDto dto) {
 
-        Optional<Post> optPost = postRepo.findById(dto.getPostID());
-        if (optPost.isEmpty()) {
-            throw new NotAvailableException("Post not found " + dto.getPostID());
-        }
+        Post post = postRepo.findById(dto.getPostId())
+                .orElseThrow(() -> new NotAvailableException("Post not found " + dto.getPostId()));
 
-        Optional<User> optUser = userRepo.findById(dto.getUserID());
-        if (optUser.isEmpty()) {
-            throw new NotAvailableException("User not found " + dto.getUserID());
-        }
+        User user = userRepo.findById(dto.getUserId())
+                .orElseThrow(() -> new NotAvailableException("User not found " + dto.getUserId()));
+
         Comments comment = new Comments();
         comment.setCommentText(dto.getCommentText());
-        comment.setPost(optPost.get());
-        comment.setUser(optUser.get());
+        comment.setPost(post);
+        comment.setUser(user);
         comment.setTimestamp(LocalDateTime.now());
 
         Comments savedComment = commentsRepo.save(comment);
 
-        return savedComment.getCommentId();
+        return mapToDto(savedComment);
     }
 
     @Override
-    public CommentResponseDto updateComment(Long commentID, CommentUpdateDto dto) {
-        Optional<Comments> optComment = commentsRepo.findById(commentID);
+    public CommentResponseDto updateComment(Long commentId, CommentUpdateDto dto) {
 
-        if (optComment.isEmpty()) {
-            throw new NotAvailableException("Comment not found " + commentID);
-        }
-        Comments comment = optComment.get();
+        Comments comment = commentsRepo.findById(commentId)
+                .orElseThrow(() -> new NotAvailableException("Comment not found " + commentId));
+
         comment.setCommentText(dto.getCommentText());
+
         Comments updated = commentsRepo.save(comment);
 
         return mapToDto(updated);
     }
 
     @Override
-    public List<CommentResponseDto> getCommentsByPostID(Long postID) {
+    public List<CommentResponseDto> getCommentsByPostId(Long postId) {
 
-        List<Comments> comments = commentsRepo.findByPost_PostID(postID);
+        List<Comments> comments = commentsRepo.findByPost_PostId(postId);
 
         return comments.stream()
                 .map(this::mapToDto)
@@ -94,26 +87,27 @@ public class CommentsServiceImpl implements CommentsService {
     }
 
     @Override
-    public List<CommentResponseDto> getCommentsByUserID(Long userID) {
+    public List<CommentResponseDto> getCommentsByUserId(Long userId) {
 
-        List<Comments> comments = commentsRepo.findByUser_UserID(userID);
+        List<Comments> comments = commentsRepo.findByUser_UserId(userId);
 
         return comments.stream()
                 .map(this::mapToDto)
                 .collect(Collectors.toList());
     }
+
     private CommentResponseDto mapToDto(Comments comment) {
 
         CommentResponseDto dto = new CommentResponseDto();
 
-        dto.setCommentID(comment.getCommentId());
+        dto.setCommentId(comment.getCommentId());
         dto.setCommentText(comment.getCommentText());
         dto.setTimestamp(comment.getTimestamp());
 
-        dto.setPostID(comment.getPost().getPostId());
+        dto.setPostId(comment.getPost().getPostId());
         dto.setPostContent(comment.getPost().getContent());
 
-        dto.setUserID(comment.getUser().getUserID());
+        dto.setUserId(comment.getUser().getUserId());
         dto.setUsername(comment.getUser().getUsername());
 
         return dto;

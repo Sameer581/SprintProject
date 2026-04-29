@@ -10,13 +10,13 @@ import com.cg.entity.Like;
 @Repository
 public interface LikeRepo extends JpaRepository<Like,Long> {
 
-    boolean existsByUserUserIDAndPostPostID(Long userId, Long postId);
+    boolean existsByUserUserIdAndPostPostId(Long userId, Long postId);
 
-    int countByPostPostID(Long postId);
+    int countByPostPostId(Long postId);
 
-    Like findByUserUserIDAndPostPostID(Long userId, Long postId);
+    Like findByUserUserIdAndPostPostId(Long userId, Long postId);
 
-    List<Like> findByPostPostID(Long postId);
+    List<Like> findByPostPostId(Long postId);
 
-    List<Like> findByUserUserID(Long userId);
+    List<Like> findByUserUserId(Long userId);
 }

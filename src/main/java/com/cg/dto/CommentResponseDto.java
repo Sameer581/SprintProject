@@ -3,37 +3,35 @@ import java.time.LocalDateTime;
 
 public class CommentResponseDto {
 
-    private Long commentID;
+    private Long commentId;
     private String commentText;
     private LocalDateTime timestamp;
 
-    private Long postID;
+    private Long postId;
     private String postContent;
 
-    private Long userID;
+    private Long userId;
     private String username;
-    
     
 	public CommentResponseDto() {
 	}
 	
-	public CommentResponseDto(Long commentID, String commentText, LocalDateTime timestamp, Long postID,
-			String postContent, Long userID, String username) {
+	public CommentResponseDto(Long commentId, String commentText, LocalDateTime timestamp, Long postId,
+			String postContent, Long userId, String username) {
 		super();
-		this.commentID = commentID;
+		this.commentId = commentId;
 		this.commentText = commentText;
 		this.timestamp = timestamp;
-		this.postID = postID;
+		this.postId = postId;
 		this.postContent = postContent;
-		this.userID = userID;
+		this.userId = userId;
 		this.username = username;
 	}
-	
-	public Long getCommentID() {
-		return commentID;
+	public Long getCommentId() {
+		return commentId;
 	}
-	public void setCommentID(Long commentID) {
-		this.commentID = commentID;
+	public void setCommentId(Long commentId) {
+		this.commentId = commentId;
 	}
 	public String getCommentText() {
 		return commentText;
@@ -47,11 +45,11 @@ public class CommentResponseDto {
 	public void setTimestamp(LocalDateTime timestamp) {
 		this.timestamp = timestamp;
 	}
-	public Long getPostID() {
-		return postID;
+	public Long getPostId() {
+		return postId;
 	}
-	public void setPostID(Long postID) {
-		this.postID = postID;
+	public void setPostId(Long postId) {
+		this.postId = postId;
 	}
 	public String getPostContent() {
 		return postContent;
@@ -59,11 +57,11 @@ public class CommentResponseDto {
 	public void setPostContent(String postContent) {
 		this.postContent = postContent;
 	}
-	public Long getUserID() {
-		return userID;
+	public Long getUserId() {
+		return userId;
 	}
-	public void setUserID(Long userID) {
-		this.userID = userID;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 	public String getUsername() {
 		return username;
@@ -71,6 +69,5 @@ public class CommentResponseDto {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
-    
 }
+    
