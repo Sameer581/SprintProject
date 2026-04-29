@@ -46,12 +46,13 @@ public class FriendshipController {
     }
     
 
+    
     // 3. Reject friend request
-    @DeleteMapping("/{friendshipId}/reject")
-    public ResponseEntity<String> rejectFriendRequest(@PathVariable Long friendshipId) {
-        friendshipService.rejectFriendRequest(friendshipId);
-        return ResponseEntity.ok("Friend request rejected successfully.");
-    }
+//    @DeleteMapping("/{friendshipId}/reject")
+//    public ResponseEntity<String> rejectFriendRequest(@PathVariable Long friendshipId) {
+//        friendshipService.rejectFriendRequest(friendshipId);
+//        return ResponseEntity.ok("Friend request rejected successfully.");
+//    }
 
     
     // 4. Get pending friend requests for a user

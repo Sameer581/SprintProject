@@ -2,6 +2,8 @@ package com.cg.entity;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -14,10 +16,12 @@ public class Messages {
 
     @ManyToOne
     @JoinColumn(name = "senderID", nullable = false)
+    @JsonIgnore
     private User sender;
 
     @ManyToOne
     @JoinColumn(name = "receiverID", nullable = false)
+    @JsonIgnore
     private User receiver;
 
     @Column(name = "message_text", nullable = false)

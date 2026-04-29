@@ -2,6 +2,7 @@
 <section name="Workbench">
 	<section name="MavenProjectImportWizardPage">
 		<list key="rootDirectory">
+			<item value="D:\coding\sprint\SprintProject"/>
 			<item value="C:\Users\MAYANK BACHHETI\SpringProjectSprint\SprintProject"/>
 		</list>
 		<list key="projectNameTemplate">

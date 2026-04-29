@@ -22,13 +22,13 @@ public class Like {
 
 	@ManyToOne
 	@JoinColumn(name = "userid")
-	private User User;
+	private User user;
 
 	public Like(int likeId, Post post, com.cg.entity.User user) {
 		super();
 		LikeId = likeId;
 		this.post = post;
-		User = user;
+		user = user;
 	}
 
 	public int getLikeId() {
@@ -48,10 +48,10 @@ public class Like {
 	}
 
 	public User getUser() {
-		return User;
+		return user;
 	}
 
 	public void setUser(User user) {
-		this.User = user;
+		this.user = user;
 	}
 }
