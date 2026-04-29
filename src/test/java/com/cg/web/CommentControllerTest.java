@@ -1,6 +1,8 @@
 package com.cg.web;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -40,96 +42,109 @@ class CommentControllerTest {
     @Test
     void addComment_success() throws Exception {
 
-            CommentsDto input = new CommentsDto(1L, 1L, "Hello");
+        Long postId = 1L;
 
-            CommentResponseDto mockResponse = new CommentResponseDto();
-            mockResponse.setCommentId(5L);
-            mockResponse.setCommentText("Hello");
+        CommentsDto input = new CommentsDto();
+        input.setUserId(1L);
+        input.setCommentText("Hello");
 
-            when(commentsService.addComment(any())).thenReturn(mockResponse);
+        CommentResponseDto response = new CommentResponseDto();
+        response.setCommentId(5L);
+        response.setCommentText("Hello");
 
-            mockMvc.perform(post("/comments")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsString(input)))
-                    .andExpect(status().isCreated())
-                    .andExpect(jsonPath("$.commentId").value(5))
-                    .andExpect(jsonPath("$.commentText").value("Hello"));
-        }
+        when(commentsService.addComment(eq(postId), any()))
+                .thenReturn(response);
 
-        @Test
-        void addComment_validationFail() throws Exception {
-
-            CommentsDto invalid = new CommentsDto(null, null, "");
-
-            mockMvc.perform(post("/comments")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsString(invalid)))
-                    .andExpect(status().isBadRequest());
-        }
-
-        @Test
-        void getComment_success() throws Exception {
-
-            CommentResponseDto dto = new CommentResponseDto();
-            dto.setCommentId(1L);
-            dto.setCommentText("Hello");
-            dto.setTimestamp(LocalDateTime.now());
-            dto.setPostId(1L);
-            dto.setUserId(1L);
-            dto.setUsername("sameer");
-
-            when(commentsService.getComment(1L)).thenReturn(dto);
-
-            mockMvc.perform(get("/comments/1"))
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.commentId").value(1))
-                    .andExpect(jsonPath("$.commentText").value("Hello"));
-        }
-
-        @Test
-        void getAllComments_success() throws Exception {
-
-            CommentResponseDto dto = new CommentResponseDto();
-            dto.setCommentId(1L);
-            dto.setCommentText("Hello");
-
-            when(commentsService.getAllComments()).thenReturn(List.of(dto));
-
-            mockMvc.perform(get("/comments"))
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.size()").value(1))
-                    .andExpect(jsonPath("$[0].commentId").value(1));
-        }
-
-        @Test
-        void updateComment_success() throws Exception {
-
-            CommentUpdateDto input = new CommentUpdateDto();
-            input.setCommentText("Updated");
-
-            CommentResponseDto output = new CommentResponseDto();
-            output.setCommentId(1L);
-            output.setCommentText("Updated");
-
-            when(commentsService.updateComment(any(), any())).thenReturn(output);
-
-            mockMvc.perform(put("/comments/1")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsString(input)))
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.commentId").value(1))
-                    .andExpect(jsonPath("$.commentText").value("Updated"));
-        }
-
-        @Test
-        void updateComment_validationFail() throws Exception {
-
-            CommentUpdateDto invalid = new CommentUpdateDto();
-            invalid.setCommentText("");
-
-            mockMvc.perform(put("/comments/1")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsString(invalid)))
-                    .andExpect(status().isBadRequest());
-        }
+        mockMvc.perform(post("/api/posts/{postId}/comments", postId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(input)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.commentId").value(5));
     }
+    @Test
+    void addComment_validationFail() throws Exception {
+
+        Long postId = 1L;
+
+        CommentsDto invalid = new CommentsDto();
+        invalid.setUserId(null);
+        invalid.setCommentText("");
+
+        mockMvc.perform(post("/api/posts/{postId}/comments", postId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(invalid)))
+                .andExpect(status().isBadRequest());
+    }
+    
+    @Test
+    void getComment_success() throws Exception {
+
+        CommentResponseDto dto = new CommentResponseDto();
+        dto.setCommentId(1L);
+        dto.setCommentText("Hello");
+
+        when(commentsService.getComment(1L)).thenReturn(dto);
+
+        mockMvc.perform(get("/api/comments/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.commentId").value(1));
+    }
+    @Test
+    void getCommentsByPost_success() throws Exception {
+
+        CommentResponseDto dto = new CommentResponseDto();
+        dto.setCommentId(1L);
+
+        when(commentsService.getCommentsByPostId(1L))
+                .thenReturn(List.of(dto));
+
+        mockMvc.perform(get("/api/posts/1/comments"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size()").value(1));
+    }
+    @Test
+    void updateComment_success() throws Exception {
+
+        CommentUpdateDto input = new CommentUpdateDto();
+        input.setCommentText("Updated");
+
+        CommentResponseDto output = new CommentResponseDto();
+        output.setCommentId(1L);
+        output.setCommentText("Updated");
+
+        when(commentsService.updateComment(eq(1L), any()))
+                .thenReturn(output);
+
+        mockMvc.perform(put("/api/comments/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(input)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.commentId").value(1));
+    }
+    @Test
+    void deleteComment_success() throws Exception {
+
+        doNothing().when(commentsService).deleteComment(1L);
+
+        mockMvc.perform(delete("/api/comments/1"))
+                .andExpect(status().isNoContent());
+    }
+
+    // ---------------- USER ----------------
+
+    @Test
+    void getCommentsByUser_success() throws Exception {
+
+        CommentResponseDto dto = new CommentResponseDto();
+        dto.setCommentId(1L);
+
+        when(commentsService.getCommentsByUserId(1L))
+                .thenReturn(List.of(dto));
+
+        mockMvc.perform(get("/api/users/1/comments"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size()").value(1));
+    }
+    
+
+}

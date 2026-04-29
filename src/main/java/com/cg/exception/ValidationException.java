@@ -7,24 +7,19 @@ import org.springframework.validation.FieldError;
 
 public class ValidationException extends RuntimeException {
 
-	private final List<FieldError> errors;
-	
-	public ValidationException(String message) {
-		super(message);
-		this.errors=Collections.emptyList();
-		
-	}
+    private final List<FieldError> errors;
 
-	public ValidationException(List<FieldError> errors) {
-		super();
-		this.errors = errors;
-	}
+    public ValidationException(String message) {
+        super(message);
+        this.errors = Collections.emptyList();
+    }
 
-	public List<FieldError> getErrors() {
-		return errors;
-	}
-	
-	
-	
+    public ValidationException(List<FieldError> errors) {
+        super("Validation failed");
+        this.errors = (errors != null) ? errors : Collections.emptyList();
+    }
 
+    public List<FieldError> getErrors() {
+        return errors;
+    }
 }
