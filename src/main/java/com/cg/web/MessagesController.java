@@ -46,13 +46,13 @@ public class MessagesController {
     }
 
     @GetMapping("/sender/{senderID}")
-    public List<Messages> getMessagesBySenderID(@PathVariable Long senderID) {
-        return messagesService.getMessagesBySenderID(senderID);
+    public List<Messages> getMessagesBySenderID(@PathVariable Long senderId) {
+        return messagesService.getMessagesBySenderId(senderId);
     }
 
     @GetMapping("/receiver/{receiverID}")
-    public List<Messages> getMessagesByReceiverID1(@PathVariable Long receiverID) {
-        return messagesService.getMessagesByReceiverID(receiverID);
+    public List<Messages> getMessagesByReceiverID1(@PathVariable Long receiverId) {
+        return messagesService.getMessagesByReceiverId(receiverId);
     }
     
 
@@ -62,8 +62,8 @@ public class MessagesController {
     }
 
     @GetMapping("/sender/{senderID}/count")
-    public Long countMessagesBySender(@PathVariable Long senderID) {
-        return messagesService.countMessagesBySender(senderID);
+    public Long countMessagesBySender(@PathVariable Long senderId) {
+        return messagesService.countMessagesBySender(senderId);
     }
     
 

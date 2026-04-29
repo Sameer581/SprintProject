@@ -50,7 +50,7 @@ public class NotificationControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(notificationController).build();
 
         user = new User();
-        user.setUserID(1L);
+        user.setUserId(1L);
         user.setUsername("rahul");
 
         notification = new Notification();

@@ -28,17 +28,27 @@ public class FriendshipServiceImpl implements FriendshipService {
     private UserRepo userRepo;
     
     
+    
+    
     // Map to DTO
     private FriendshipDto mapToDto(Friendship friendship) {
 
         FriendshipDto dto = new FriendshipDto();
+
         dto.setFriendshipId(friendship.getFriendshipId());
-        dto.setUserId1(friendship.getUser1().getUserID());
-        dto.setUserId2(friendship.getUser2().getUserID());
+
+        dto.setUserId1(friendship.getUser1().getUserId());
+        dto.setUsername1(friendship.getUser1().getUsername()); 
+
+        dto.setUserId2(friendship.getUser2().getUserId());
+        dto.setUsername2(friendship.getUser2().getUsername()); 
+
         dto.setStatus(friendship.getStatus());
 
         return dto;
     }
+    
+   
 
     
     // Sending friend request
@@ -51,7 +61,7 @@ public class FriendshipServiceImpl implements FriendshipService {
 	                .orElseThrow(() -> new UserNotFoundException("Receiver not found"));
 
 	        
-	        if (sender.getUserID().equals(receiver.getUserID())) {
+	        if (sender.getUserId().equals(receiver.getUserId())) {
 	            throw new InvalidFriendRequestException(
 	                "Cannot send a friend request to yourself"
 	            );
@@ -135,7 +145,7 @@ public class FriendshipServiceImpl implements FriendshipService {
 	                .collect(Collectors.toList());
 	}
 
-	
+
 	
 	// get all friendships
 	@Override
@@ -148,29 +158,48 @@ public class FriendshipServiceImpl implements FriendshipService {
 
 	
 	// check friendship status between two users
+//	@Override
+//	public FriendshipDto checkFriendship(Long userId1, Long userId2) {
+//
+//        User u1 = userRepo.findById(userId1)
+//                .orElseThrow(() -> new UserNotFoundException("User1 not found"));
+//
+//        User u2 = userRepo.findById(userId2)
+//                .orElseThrow(() -> new UserNotFoundException("User2 not found"));
+//
+//        return friendshipRepo.findByUsers(u1, u2)
+//                .map(this::mapToDto)
+//                .orElse(null);
+//	}
+	
+	
+	
+	// check friendship status between two users
 	@Override
 	public FriendshipDto checkFriendship(Long userId1, Long userId2) {
 
-        User u1 = userRepo.findById(userId1)
-                .orElseThrow(() -> new UserNotFoundException("User1 not found"));
+	    User u1 = userRepo.findById(userId1)
+	            .orElseThrow(() -> new UserNotFoundException("User1 not found"));
 
-        User u2 = userRepo.findById(userId2)
-                .orElseThrow(() -> new UserNotFoundException("User2 not found"));
+	    User u2 = userRepo.findById(userId2)
+	            .orElseThrow(() -> new UserNotFoundException("User2 not found"));
 
-        return friendshipRepo.findByUsers(u1, u2)
-                .map(this::mapToDto)
-                .orElse(null);
+	    Friendship friendship = friendshipRepo.findByUsers(u1, u2)
+	            .orElseThrow(() ->
+	                    new NotAvailableException("No friendship exists between these users"));
+
+	    return mapToDto(friendship);
 	}
 
 	
 	
 	// get friends count
 	@Override
-	public Integer getFriendsCount(Long userId) {
-		   return friendshipRepo.countByUserIdAndStatus(
-	                userId.longValue(),
-	                FriendshipStatus.ACCEPTED
-	        );
+	public Long getFriendsCount(Long userId) {
+	    return friendshipRepo.countByUserIdAndStatus(
+	            userId,
+	            FriendshipStatus.ACCEPTED
+	    );
 	}
 	
 	

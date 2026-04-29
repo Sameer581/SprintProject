@@ -42,22 +42,22 @@ public class MessagesServiceTest {
     @BeforeEach
     void setUp() {
         sender = new User();
-        sender.setUserID(1L);
+        sender.setUserId(1L);
         sender.setUsername("rahul");
 
         receiver = new User();
-        receiver.setUserID(2L);
+        receiver.setUserId(2L);
         receiver.setUsername("amit");
 
         message = new Messages();
-        message.setMessageID(101L);
+        message.setMessageId(101L);
         message.setMessageText("Hello Amit");
         message.setSender(sender);
         message.setReceiver(receiver);
 
         dto = new MessagesDto();
-        dto.setSenderID(1L);
-        dto.setReceiverID(2L);
+        dto.setSenderId(1L);
+        dto.setReceiverId(2L);
         dto.setMessageText("Hello Amit");
     }
 
@@ -98,15 +98,13 @@ public class MessagesServiceTest {
         verify(messagesRepo, never()).save(any(Messages.class));
     }
 
-    // GET MESSAGE BY ID
-
     @Test
     void testGetMessage_success() {
         when(messagesRepo.findById(101L)).thenReturn(Optional.of(message));
 
         Messages result = messagesService.getMessage(101L);
 
-        assertEquals(101L, result.getMessageID());
+        assertEquals(101L, result.getMessageId());
         assertEquals("Hello Amit", result.getMessageText());
     }
 
@@ -124,7 +122,7 @@ public class MessagesServiceTest {
     @Test
     void testGetAllMessages_success() {
         Messages message2 = new Messages();
-        message2.setMessageID(102L);
+        message2.setMessageId(102L);
         message2.setMessageText("Hi Rahul");
 
         when(messagesRepo.findAll()).thenReturn(Arrays.asList(message, message2));
@@ -149,24 +147,24 @@ public class MessagesServiceTest {
 
     @Test
     void testGetMessagesBySenderID_success() {
-        when(messagesRepo.findBySenderUserID(1L)).thenReturn(Arrays.asList(message));
+        when(messagesRepo.findBySenderUserId(1L)).thenReturn(Arrays.asList(message));
 
-        List<Messages> result = messagesService.getMessagesBySenderID(1L);
+        List<Messages> result = messagesService.getMessagesBySenderId(1L);
 
         assertEquals(1, result.size());
-        assertEquals(1L, result.get(0).getSender().getUserID());
+        assertEquals(1L, result.get(0).getSender().getUserId());
     }
 
     // GET BY RECEIVER ID
 
     @Test
     void testGetMessagesByReceiverID_success() {
-        when(messagesRepo.findByReceiverUserID(2L)).thenReturn(Arrays.asList(message));
+        when(messagesRepo.findByReceiverUserId(2L)).thenReturn(Arrays.asList(message));
 
-        List<Messages> result = messagesService.getMessagesByReceiverID(2L);
+        List<Messages> result = messagesService.getMessagesByReceiverId(2L);
 
         assertEquals(1, result.size());
-        assertEquals(2L, result.get(0).getReceiver().getUserID());
+        assertEquals(2L, result.get(0).getReceiver().getUserId());
     }
 
     // GET CONVERSATION
@@ -185,7 +183,7 @@ public class MessagesServiceTest {
 
     @Test
     void testCountMessagesBySender_success() {
-        when(messagesRepo.countBySenderUserID(1L)).thenReturn(5L);
+        when(messagesRepo.countBySenderUserId(1L)).thenReturn(5L);
 
         Long result = messagesService.countMessagesBySender(1L);
 

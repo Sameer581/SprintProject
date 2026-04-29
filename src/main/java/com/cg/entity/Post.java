@@ -10,7 +10,7 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long postID;
+    private Long postId;
 
     @Column(name = "content")
     private String content;
@@ -19,7 +19,7 @@ public class Post {
     private Timestamp timestamp;
 
     @ManyToOne
-    @JoinColumn(name = "userID")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
@@ -28,62 +28,70 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Like> likes;
 
-    public Post() {
-    }
+	public Post() {
+	}
 
-    public Post(Long postID, String content, Timestamp timestamp, User user) {
-        super();
-        this.postID = postID;
-        this.content = content;
-        this.timestamp = timestamp;
-        this.user = user;
-    }
+	public Post(Long postId, String content, Timestamp timestamp, User user, List<Comments> comments,
+			List<Like> likes) {
+		super();
+		this.postId = postId;
+		this.content = content;
+		this.timestamp = timestamp;
+		this.user = user;
+		this.comments = comments;
+		this.likes = likes;
+	}
 
-    public Long getPostID() {
-        return postID;
-    }
+	public Long getPostId() {
+		return postId;
+	}
 
-    public void setPostID(Long postID) {
-        this.postID = postID;
-    }
+	public void setPostId(Long postId) {
+		this.postId = postId;
+	}
 
-    public String getContent() {
-        return content;
-    }
+	public String getContent() {
+		return content;
+	}
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+	public void setContent(String content) {
+		this.content = content;
+	}
 
-    public Timestamp getTimestamp() {
-        return timestamp;
-    }
+	public Timestamp getTimestamp() {
+		return timestamp;
+	}
 
-    public void setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
-    }
+	public void setTimestamp(Timestamp timestamp) {
+		this.timestamp = timestamp;
+	}
 
-    public User getUser() {
-        return user;
-    }
+	public User getUser() {
+		return user;
+	}
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+	public void setUser(User user) {
+		this.user = user;
+	}
 
-    public List<Comments> getComments() {
-        return comments;
-    }
+	public List<Comments> getComments() {
+		return comments;
+	}
 
-    public void setComments(List<Comments> comments) {
-        this.comments = comments;
-    }
+	public void setComments(List<Comments> comments) {
+		this.comments = comments;
+	}
 
-    public List<Like> getLikes() {
-        return likes;
-    }
+	public List<Like> getLikes() {
+		return likes;
+	}
 
-    public void setLikes(List<Like> likes) {
-        this.likes = likes;
-    }
+	public void setLikes(List<Like> likes) {
+		this.likes = likes;
+	}
+	
+	
 }
+	
+ 
+    

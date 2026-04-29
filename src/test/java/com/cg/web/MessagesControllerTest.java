@@ -49,22 +49,22 @@ public class MessagesControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(messagesController).build();
 
         sender = new User();
-        sender.setUserID(1L);
+        sender.setUserId(1L);
         sender.setUsername("rahul");
 
         receiver = new User();
-        receiver.setUserID(2L);
+        receiver.setUserId(2L);
         receiver.setUsername("amit");
 
         message = new Messages();
-        message.setMessageID(101L);
+        message.setMessageId(101L);
         message.setMessageText("Hello Amit");
         message.setSender(sender);
         message.setReceiver(receiver);
 
         messagesDto = new MessagesDto();
-        messagesDto.setSenderID(1L);
-        messagesDto.setReceiverID(2L);
+        messagesDto.setSenderId(1L);
+        messagesDto.setReceiverId(2L);
         messagesDto.setMessageText("Hello Amit");
     }
 
@@ -110,7 +110,7 @@ public class MessagesControllerTest {
 
     @Test
     void testGetMessagesBySenderID_success() throws Exception {
-        when(messagesService.getMessagesBySenderID(1L)).thenReturn(Arrays.asList(message));
+        when(messagesService.getMessagesBySenderId(1L)).thenReturn(Arrays.asList(message));
 
         mockMvc.perform(get("/messages/sender/1"))
                 .andExpect(status().isOk())
@@ -122,7 +122,7 @@ public class MessagesControllerTest {
 
     @Test
     void testGetMessagesByReceiverID_success() throws Exception {
-        when(messagesService.getMessagesByReceiverID(2L)).thenReturn(Arrays.asList(message));
+        when(messagesService.getMessagesByReceiverId(2L)).thenReturn(Arrays.asList(message));
 
         mockMvc.perform(get("/messages/receiver/2"))
                 .andExpect(status().isOk())
@@ -158,7 +158,7 @@ public class MessagesControllerTest {
     @Test
     void testUpdateMessage_success() throws Exception {
         Messages updatedMessage = new Messages();
-        updatedMessage.setMessageID(101L);
+        updatedMessage.setMessageId(101L);
         updatedMessage.setMessageText("Updated Message");
         updatedMessage.setSender(sender);
         updatedMessage.setReceiver(receiver);

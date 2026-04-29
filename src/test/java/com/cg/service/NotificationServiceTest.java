@@ -41,7 +41,7 @@ public class NotificationServiceTest {
     @BeforeEach
     void setUp() {
         user = new User();
-        user.setUserID(1L);
+        user.setUserId(1L);
         user.setUsername("rahul");
 
         notification = new Notification();
@@ -131,14 +131,14 @@ public class NotificationServiceTest {
 
     @Test
     void testGetNotificationsByUserId_success() {
-        when(notificationRepo.findByUserUserID(1L))
+        when(notificationRepo.findByUserUserId(1L))
                 .thenReturn(Arrays.asList(notification));
 
         List<Notification> result =
                 notificationService.getNotificationsByUserId(1L);
 
         assertEquals(1, result.size());
-        assertEquals(1L, result.get(0).getUser().getUserID());
+        assertEquals(1L, result.get(0).getUserId().getUserId());
         assertEquals("New message received", result.get(0).getContent());
     }
 
@@ -146,7 +146,7 @@ public class NotificationServiceTest {
 
     @Test
     void testCountNotificationsByUserId_success() {
-        when(notificationRepo.countByUserUserID(1L)).thenReturn(5L);
+        when(notificationRepo.countByUserUserId(1L)).thenReturn(5L);
 
         Long result = notificationService.countNotificationsByUserId(1L);
 

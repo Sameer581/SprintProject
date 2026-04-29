@@ -35,7 +35,7 @@ public interface FriendshipService {
 	 FriendshipDto checkFriendship(Long userId1, Long userId2);   
 	    
 	 // get number of friends count
-	 Integer getFriendsCount(Long userId);                           
+	 Long getFriendsCount(Long userId);                           
 
 	 // deleting/removing friend
 	 // void removeFriend(Integer friendshipId);

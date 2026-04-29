@@ -43,7 +43,7 @@ public class UserServiceTest {
     @BeforeEach
     void setUp() {
         user = new User();
-        user.setUserID(1L);
+        user.setUserId(1L);
         user.setUsername("rahul");
         user.setEmail("rahul@gmail.com");
         user.setPassword("rahul123");
@@ -53,8 +53,6 @@ public class UserServiceTest {
         userDto.setEmail("rahul@gmail.com");
         userDto.setPassword("rahul123");
     }
-
-    // ─── CREATE ──────────────────────────────────────────────────────────────
 
     @Test
     void testCreateUser_success() {
@@ -122,7 +120,7 @@ public class UserServiceTest {
     @Test
     void testGetAllUsers_success() {
         User user2 = new User();
-        user2.setUserID(2L);
+        user2.setUserId(2L);
         user2.setUsername("amit");
         user2.setEmail("amit@gmail.com");
 
