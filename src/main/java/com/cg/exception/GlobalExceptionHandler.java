@@ -1,26 +1,34 @@
 package com.cg.exception;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.http.HttpStatus;
+import org.springframework.http.*;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.annotation.*;
 
-import com.cg.dto.ErrorMessageDto;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    // Validation Exception (merged logic)
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<?> handleValidation(ValidationException ex) {
+
+        Map<String, List<String>> errMap = new HashMap<>();
+
+        for (FieldError fr : ex.getErrors()) {
+            errMap
+                .computeIfAbsent(fr.getField(), key -> new ArrayList<>())
+                .add(fr.getDefaultMessage());
+        }
+
+        return new ResponseEntity<>(errMap, HttpStatus.BAD_REQUEST);
+    }
+
+    // Invalid JSON / Date format (his feature)
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorMessageDto handleInvalidJson(HttpMessageNotReadableException ex) {
+    public ResponseEntity<ErrorResponse> handleInvalidJson(HttpMessageNotReadableException ex) {
 
         String msg = "Invalid request format";
 
@@ -28,58 +36,44 @@ public class GlobalExceptionHandler {
             msg = "Enter the date in yyyy-MM-dd format";
         }
 
-        ErrorMessageDto dto = new ErrorMessageDto();
-        dto.setErrorMsg(msg);
-        dto.setTimeStamp(LocalDateTime.now());
-        dto.setStatus(HttpStatus.BAD_REQUEST.toString());
-
-        return dto;
-    }
-    
-    @ExceptionHandler(ValidationException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorMessageDto handleValidation(ValidationException ex) {
-
-        Map<String, List<String>> errMap = new HashMap<>();
-
-        List<FieldError> errors = ex.getErrors();
-
-        for (FieldError fr : errors) {
-            errMap
-                .computeIfAbsent(fr.getField(), key -> new ArrayList<>())
-                .add(fr.getDefaultMessage());
-        }
-
-        ErrorMessageDto dto = new ErrorMessageDto();
-        dto.setErrorMsg("Validation failed");
-        dto.setErrMap(errMap);
-        dto.setTimeStamp(LocalDateTime.now());
-        dto.setStatus(HttpStatus.BAD_REQUEST.toString());
-
-        return dto;
+        return build(HttpStatus.BAD_REQUEST, msg);
     }
 
+    // Resource Not Found (your feature)
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFound(ResourceNotFoundException ex) {
+        return build(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
+    // Not Available (merged support)
     @ExceptionHandler(NotAvailableException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorMessageDto handleNotFound(NotAvailableException ex) {
-
-        ErrorMessageDto dto = new ErrorMessageDto();
-        dto.setErrorMsg(ex.getMessage());
-        dto.setTimeStamp(LocalDateTime.now());
-        dto.setStatus(HttpStatus.NOT_FOUND.toString());
-
-        return dto;
+    public ResponseEntity<ErrorResponse> handleNotAvailable(NotAvailableException ex) {
+        return build(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
+    // Duplicate Resource (your feature)
+    @ExceptionHandler(DuplicateResourceException.class)
+    public ResponseEntity<ErrorResponse> handleDuplicate(DuplicateResourceException ex) {
+        return build(HttpStatus.CONFLICT, ex.getMessage());
+    }
+
+    // Unauthorized (your feature)
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<ErrorResponse> handleUnauthorized(UnauthorizedException ex) {
+        return build(HttpStatus.UNAUTHORIZED, ex.getMessage());
+    }
+
+    // Generic Exception (merged)
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorMessageDto handleGeneric(Exception ex) {
+    public ResponseEntity<ErrorResponse> handleGeneral(Exception ex) {
+        return build(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error: " + ex.getMessage());
+    }
 
-        ErrorMessageDto dto = new ErrorMessageDto();
-        dto.setErrorMsg("Unexpected error: " + ex.getMessage());
-        dto.setTimeStamp(LocalDateTime.now());
-        dto.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.toString());
-
-        return dto;
+    // Common builder (your clean design)
+    private ResponseEntity<ErrorResponse> build(HttpStatus status, String message) {
+        return new ResponseEntity<>(
+                new ErrorResponse(status.value(), message, LocalDateTime.now()),
+                status
+        );
     }
 }
