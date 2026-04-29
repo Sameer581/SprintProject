@@ -24,14 +24,23 @@ public class MessagesServiceImpl implements MessagesService {
     private UserRepo userRepo;
 
     @Override
+<<<<<<< HEAD
     public Messages getMessage(Long messageID) {
         Optional<Messages> optMessage = messagesRepo.findById(messageID);
+=======
+    public Messages getMessage(Long messageId) {
+        Optional<Messages> optMessage = messagesRepo.findById(messageId);
+>>>>>>> 7f73ceadb51d4a7b9263867f5db36755cae608a3
 
         if (optMessage.isPresent()) {
             return optMessage.get();
         }
 
+<<<<<<< HEAD
         throw new NotAvailableException("Message not found " + messageID);
+=======
+        throw new NotAvailableException("Message not found " + messageId);
+>>>>>>> 7f73ceadb51d4a7b9263867f5db36755cae608a3
     }
 
     @Override
@@ -41,11 +50,19 @@ public class MessagesServiceImpl implements MessagesService {
 
     @Override
     public Long sendMessage(MessagesDto dto) {
+<<<<<<< HEAD
         User sender = userRepo.findById(dto.getSenderID())
                 .orElseThrow(() -> new NotAvailableException("Sender not found " + dto.getSenderID()));
 
         User receiver = userRepo.findById(dto.getReceiverID())
                 .orElseThrow(() -> new NotAvailableException("Receiver not found " + dto.getReceiverID()));
+=======
+        User sender = userRepo.findById(dto.getSenderId())
+                .orElseThrow(() -> new NotAvailableException("Sender not found " + dto.getSenderId()));
+
+        User receiver = userRepo.findById(dto.getReceiverId())
+                .orElseThrow(() -> new NotAvailableException("Receiver not found " + dto.getReceiverId()));
+>>>>>>> 7f73ceadb51d4a7b9263867f5db36755cae608a3
 
         Messages message = new Messages();
         message.setMessageText(dto.getMessageText());
@@ -54,6 +71,7 @@ public class MessagesServiceImpl implements MessagesService {
         message.setReceiver(receiver);
 
         Messages savedMessage = messagesRepo.save(message);
+<<<<<<< HEAD
         return savedMessage.getMessageID();
     }
 
@@ -65,6 +83,19 @@ public class MessagesServiceImpl implements MessagesService {
     @Override
     public List<Messages> getMessagesByReceiverID(Long receiverID) {
         return messagesRepo.findByReceiverUserID(receiverID);
+=======
+        return savedMessage.getMessageId();
+    }
+
+    @Override
+    public List<Messages> getMessagesBySenderId(Long senderId) {
+        return messagesRepo.findBySenderUserId(senderId);
+    }
+
+    @Override
+    public List<Messages> getMessagesByReceiverId(Long receiverId) {
+        return messagesRepo.findByReceiverUserId(receiverId);
+>>>>>>> 7f73ceadb51d4a7b9263867f5db36755cae608a3
     }
 
     @Override
@@ -73,8 +104,13 @@ public class MessagesServiceImpl implements MessagesService {
     }
 
     @Override
+<<<<<<< HEAD
     public Long countMessagesBySender(Long senderID) {
         return messagesRepo.countBySenderUserID(senderID);
+=======
+    public Long countMessagesBySender(Long senderId) {
+        return messagesRepo.countBySenderUserId(senderId);
+>>>>>>> 7f73ceadb51d4a7b9263867f5db36755cae608a3
     }
 
     @Override

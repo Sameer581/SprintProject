@@ -2,7 +2,16 @@ package com.cg.entity;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "comments")
@@ -10,40 +19,42 @@ public class Comments {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "commentID")
-    private Long commentID;
+    @Column(name = "comment_id")
+    private Long commentId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "postID")
+
+    @ManyToOne
+    @JoinColumn(name = "post_id")
     private Post post;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userID")
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Column(name = "comment_text")
     private String commentText;
 
     @Column(name = "timestamp")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime timestamp;
     
 	public Comments() {}
 
-	public Comments(Long commentID, Post post, User user, String commentText, LocalDateTime timestamp) {
+	public Comments(Long commentId, Post post, User user, String commentText, LocalDateTime timestamp) {
 		super();
-		this.commentID = commentID;
+		this.commentId = commentId;
 		this.post = post;
 		this.user = user;
 		this.commentText = commentText;
 		this.timestamp = timestamp;
 	}
 
-	public Long getCommentID() {
-		return commentID;
+	public Long getCommentId() {
+		return commentId;
 	}
 
-	public void setCommentID(Long commentID) {
-		this.commentID = commentID;
+	public void setCommentId(Long commentId) {
+		this.commentId = commentId;
 	}
 
 	public Post getPost() {
@@ -78,4 +89,6 @@ public class Comments {
 		this.timestamp = timestamp;
 	}
 }
-   
+	
+
+	

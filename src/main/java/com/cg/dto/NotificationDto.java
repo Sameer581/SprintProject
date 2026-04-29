@@ -17,7 +17,7 @@ public class NotificationDto {
 
     private LocalDateTime timestamp;
 
-    public NotificationDTO() {
+    public NotificationDto() {
     }
 
     public NotificationDto(Long notificationId, Long userId, String content, LocalDateTime timestamp) {

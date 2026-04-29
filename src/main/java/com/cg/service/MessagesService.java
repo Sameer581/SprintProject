@@ -9,16 +9,18 @@ public interface MessagesService {
 
     public Long sendMessage(MessagesDto dto);
 
-    public Messages getMessage(Long messageID);
+
+    public Messages getMessage(Long messageId);
 
     public List<Messages> getAllMessages();
 
-    public List<Messages> getMessagesBySenderID(Long senderID);
+    public List<Messages> getMessagesBySenderId(Long senderId);
 
-    public List<Messages> getMessagesByReceiverID(Long receiverID);
+    public List<Messages> getMessagesByReceiverId(Long receiverId);
     List<Messages> getConversation(Long user1, Long user2);
 
-    Long countMessagesBySender(Long senderID);
+    Long countMessagesBySender(Long senderId);
+
     
     Messages updateMessage(Long id, MessagesDto dto);
 }

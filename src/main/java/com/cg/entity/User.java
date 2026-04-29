@@ -11,7 +11,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Long userID;
+    private Long userId;
 
     @Column(name = "username")
     private String username;
@@ -33,14 +33,16 @@ public class User {
     private List<Comments> comments;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Like> likes;
+    private List<Like> likes;    
 
-    public User() {}
+	public User() {
+		
+	}
 
-	public User(Long userID, String username, String email, String password, byte[] profilePicture, List<Post> posts,
+	public User(Long userId, String username, String email, String password, byte[] profilePicture, List<Post> posts,
 			List<Comments> comments, List<Like> likes) {
 		super();
-		this.userID = userID;
+		this.userId = userId;
 		this.username = username;
 		this.email = email;
 		this.password = password;
@@ -50,12 +52,13 @@ public class User {
 		this.likes = likes;
 	}
 
-	public Long getUserID() {
-		return userID;
+
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setUserID(Long userID) {
-		this.userID = userID;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	public String getUsername() {
@@ -114,6 +117,7 @@ public class User {
 		this.likes = likes;
 	}
 	
-	
 }
+    
+    
     

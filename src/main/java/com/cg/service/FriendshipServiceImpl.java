@@ -37,10 +37,10 @@ public class FriendshipServiceImpl implements FriendshipService {
 
         dto.setFriendshipId(friendship.getFriendshipId());
 
-        dto.setUserId1(friendship.getUser1().getUserID());
+        dto.setUserId1(friendship.getUser1().getUserId());
         dto.setUsername1(friendship.getUser1().getUsername()); 
 
-        dto.setUserId2(friendship.getUser2().getUserID());
+        dto.setUserId2(friendship.getUser2().getUserId());
         dto.setUsername2(friendship.getUser2().getUsername()); 
 
         dto.setStatus(friendship.getStatus());
@@ -61,7 +61,7 @@ public class FriendshipServiceImpl implements FriendshipService {
 	                .orElseThrow(() -> new UserNotFoundException("Receiver not found"));
 
 	        
-	        if (sender.getUserID().equals(receiver.getUserID())) {
+	        if (sender.getUserId().equals(receiver.getUserId())) {
 	            throw new InvalidFriendRequestException(
 	                "Cannot send a friend request to yourself"
 	            );
@@ -201,6 +201,8 @@ public class FriendshipServiceImpl implements FriendshipService {
 	            FriendshipStatus.ACCEPTED
 	    );
 	}
+	
+	
 	
 	
 

@@ -2,71 +2,45 @@ package com.cg.dto;
 
 import java.time.LocalDateTime;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class CommentsDto {
-
-
-    private Long commentID;
-    private Long postID;
-    private Long userID;
-
-    private String commentText;
-    private LocalDateTime timestamp;
-
-    public CommentsDto() {}
+	@NotNull
+    private Long postId;
+	@NotNull
+    private Long userId;
+    @NotBlank
+	private String commentText;
     
-    public CommentsDto(Long commentID, Long postID, Long userID, String commentText, LocalDateTime timestamp) {
+	public CommentsDto() {
+
+	}
+	public CommentsDto(@NotNull Long postId, @NotNull Long userId, @NotBlank String commentText) {
 		super();
-		this.commentID = commentID;
-		this.postID = postID;
-		this.userID = userID;
+		this.postId = postId;
+		this.userId = userId;
 		this.commentText = commentText;
-		this.timestamp = timestamp;
 	}
-
-    
-    // getters and setters
-	public Long getCommentID() {
-		return commentID;
+	public Long getPostId() {
+		return postId;
 	}
-
-	public void setCommentID(Long commentID) {
-		this.commentID = commentID;
+	public void setPostId(Long postId) {
+		this.postId = postId;
 	}
-
-	public Long getPostID() {
-		return postID;
+	public Long getUserId() {
+		return userId;
 	}
-
-	public void setPostID(Long postID) {
-		this.postID = postID;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
-
-	public Long getUserID() {
-		return userID;
-	}
-
-	public void setUserID(Long userID) {
-		this.userID = userID;
-	}
-
 	public String getCommentText() {
 		return commentText;
 	}
-
 	public void setCommentText(String commentText) {
 		this.commentText = commentText;
 	}
-
-	public LocalDateTime getTimestamp() {
-		return timestamp;
-	}
-
-	public void setTimestamp(LocalDateTime timestamp) {
-		this.timestamp = timestamp;
-	}
+	
+}
     
     
-  
-	}
-    
-

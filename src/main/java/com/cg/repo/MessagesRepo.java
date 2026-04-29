@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.cg.entity.Messages;
 
 public interface MessagesRepo extends JpaRepository<Messages, Long> {
+<<<<<<< HEAD
 	List<Messages> findBySenderUserID(Long senderID);
 
     List<Messages> findByReceiverUserID(Long receiverID);
@@ -19,4 +20,17 @@ public interface MessagesRepo extends JpaRepository<Messages, Long> {
     	List<Messages> getConversation(Long user1, Long user2);
 
     	Long countBySenderUserID(Long senderID);
+=======
+	List<Messages> findBySenderUserId(Long senderId);
+
+    List<Messages> findByReceiverUserId(Long receiverId);
+    
+    @Query("SELECT m FROM Messages m WHERE " +
+    	       "(m.sender.userId = :user1 AND m.receiver.userId = :user2) OR " +
+    	       "(m.sender.userId = :user2 AND m.receiver.userId = :user1) " +
+    	       "ORDER BY m.timestamp")
+    	List<Messages> getConversation(Long user1, Long user2);
+
+    	Long countBySenderUserId(Long senderId);
+>>>>>>> 7f73ceadb51d4a7b9263867f5db36755cae608a3
     }
