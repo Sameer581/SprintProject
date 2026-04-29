@@ -64,13 +64,13 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public List<Notification> getNotificationsByUserId(Long userID) {
-        return notificationRepo.findByUserUserID(userID);
+    public List<Notification> getNotificationsByUserId(Long userId) {
+        return notificationRepo.findByUserUserId(userId);
     }
     
     @Override
     public Long countNotificationsByUserId(Long userId) {
-        return notificationRepo.countByUserUserID(userId);
+        return notificationRepo.countByUserUserId(userId);
     }
 
     @Override
