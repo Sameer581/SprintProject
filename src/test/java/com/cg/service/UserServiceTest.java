@@ -43,11 +43,9 @@ public class UserServiceTest {
     @BeforeEach
     void setUp() {
         user = new User();
-<<<<<<< HEAD
-        user.setUserID(1L);
-=======
+
         user.setUserId(1L);
->>>>>>> 7f73ceadb51d4a7b9263867f5db36755cae608a3
+
         user.setUsername("rahul");
         user.setEmail("rahul@gmail.com");
         user.setPassword("rahul123");
@@ -58,11 +56,10 @@ public class UserServiceTest {
         userDto.setPassword("rahul123");
     }
 
-<<<<<<< HEAD
+
     // ─── CREATE ──────────────────────────────────────────────────────────────
 
-=======
->>>>>>> 7f73ceadb51d4a7b9263867f5db36755cae608a3
+
     @Test
     void testCreateUser_success() {
         when(userRepo.save(any(User.class))).thenReturn(user);
@@ -129,11 +126,9 @@ public class UserServiceTest {
     @Test
     void testGetAllUsers_success() {
         User user2 = new User();
-<<<<<<< HEAD
-        user2.setUserID(2L);
-=======
+
         user2.setUserId(2L);
->>>>>>> 7f73ceadb51d4a7b9263867f5db36755cae608a3
+
         user2.setUsername("amit");
         user2.setEmail("amit@gmail.com");
 
