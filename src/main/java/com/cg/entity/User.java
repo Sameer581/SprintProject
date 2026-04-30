@@ -10,7 +10,8 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userID;
+    @Column
+    private Long userId;
 
     @Column(name = "username")
     private String username;
@@ -32,81 +33,88 @@ public class User {
     private List<Comments> comments;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Likes> likes;
+    private List<Like> likes;    
 
-    public User() {
-    }
+	public User() {
+		
+	}
 
-    public User(Integer userID, String username, String email, String password, byte[] profilePicture) {
-        super();
-        this.userID = userID;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.profilePicture = profilePicture;
-    }
+	public User(Long userId, String username, String email, String password, byte[] profilePicture, List<Post> posts,
+			List<Comments> comments, List<Like> likes) {
+		super();
+		this.userId = userId;
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.profilePicture = profilePicture;
+		this.posts = posts;
+		this.comments = comments;
+		this.likes = likes;
+	}
 
-    public Integer getUserID() {
-        return userID;
-    }
+	public Long getUserId() {
+		return userId;
+	}
 
-    public void setUserID(Integer userID) {
-        this.userID = userID;
-    }
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 
-    public String getUsername() {
-        return username;
-    }
+	public String getUsername() {
+		return username;
+	}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public byte[] getProfilePicture() {
-        return profilePicture;
-    }
+	public byte[] getProfilePicture() {
+		return profilePicture;
+	}
 
-    public void setProfilePicture(byte[] profilePicture) {
-        this.profilePicture = profilePicture;
-    }
+	public void setProfilePicture(byte[] profilePicture) {
+		this.profilePicture = profilePicture;
+	}
 
-    public List<Post> getPosts() {
-        return posts;
-    }
+	public List<Post> getPosts() {
+		return posts;
+	}
 
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
-    }
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
+	}
 
-    public List<Comments> getComments() {
-        return comments;
-    }
+	public List<Comments> getComments() {
+		return comments;
+	}
 
-    public void setComments(List<Comments> comments) {
-        this.comments = comments;
-    }
+	public void setComments(List<Comments> comments) {
+		this.comments = comments;
+	}
 
-    public List<Likes> getLikes() {
-        return likes;
-    }
+	public List<Like> getLikes() {
+		return likes;
+	}
 
-    public void setLikes(List<Likes> likes) {
-        this.likes = likes;
-    }
+	public void setLikes(List<Like> likes) {
+		this.likes = likes;
+	}
 }
+    
+    

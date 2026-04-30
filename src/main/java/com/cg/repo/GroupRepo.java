@@ -6,14 +6,15 @@ import org.springframework.stereotype.Repository;
 
 import com.cg.entity.Group;
 import com.cg.entity.User;
+import java.util.Optional;
 
 
 @Repository
-public interface GroupRepo extends JpaRepository<Group, Integer> {
+public interface GroupRepo extends JpaRepository<Group, Long> {
 	
 	List<Group> findByAdmin(User admin);
-	List<Group> findByAdminUserId(Integer adminId);
-	Group findByGroupName(String groupName);
+	List<Group> findByAdminUserID(Long adminId);
+	Optional<Group> findByGroupName(String groupName);
 	
 	
 
