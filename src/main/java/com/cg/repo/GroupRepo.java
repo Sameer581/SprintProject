@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface GroupRepo extends JpaRepository<Group, Long> {
 	
 	List<Group> findByAdmin(User admin);
-	List<Group> findByAdminUserID(Long adminId);
+	List<Group> findByAdminUserId(Long adminId);
 	Optional<Group> findByGroupName(String groupName);
 	
 	

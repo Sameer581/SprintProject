@@ -123,7 +123,7 @@ public class GroupServiceImpl implements GroupService {
         userRepo.findById(adminId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "adminId", adminId));
 
-        List<Group> groups = groupRepo.findByAdminUserID(adminId);
+        List<Group> groups = groupRepo.findByAdminUserId(adminId);
 
         if (groups.isEmpty()) {
             throw new ResourceNotFoundException("Groups", "adminId", adminId);
