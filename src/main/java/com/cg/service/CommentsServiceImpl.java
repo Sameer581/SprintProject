@@ -18,6 +18,7 @@ import com.cg.repo.CommentsRepo;
 import com.cg.repo.PostRepo;
 import com.cg.repo.UserRepo;
 
+
 @Service
 public class CommentsServiceImpl implements CommentsService {
 
@@ -31,23 +32,10 @@ public class CommentsServiceImpl implements CommentsService {
     private UserRepo userRepo;
 
     @Override
-    public CommentResponseDto getComment(Long commentId) {
-        Comments comment = commentsRepo.findById(commentId)
-                .orElseThrow(() -> new NotAvailableException("Comment not found " + commentId));
+    public CommentResponseDto addComment(Long postId, CommentsDto dto) {
 
-        return mapToDto(comment);
-    }
-
-    @Override
-    public List<CommentResponseDto> getAllComments() {
-        return commentsRepo.findAllCommentsDto();
-    }
-
-    @Override
-    public CommentResponseDto addComment(CommentsDto dto) {
-
-        Post post = postRepo.findById(dto.getPostId())
-                .orElseThrow(() -> new NotAvailableException("Post not found " + dto.getPostId()));
+        Post post = postRepo.findById(postId)
+                .orElseThrow(() -> new NotAvailableException("Post not found " + postId));
 
         User user = userRepo.findById(dto.getUserId())
                 .orElseThrow(() -> new NotAvailableException("User not found " + dto.getUserId()));
@@ -58,9 +46,36 @@ public class CommentsServiceImpl implements CommentsService {
         comment.setUser(user);
         comment.setTimestamp(LocalDateTime.now());
 
-        Comments savedComment = commentsRepo.save(comment);
+        Comments saved = commentsRepo.save(comment);
 
-        return mapToDto(savedComment);
+        return mapToDto(saved);
+    }
+
+    @Override
+    public CommentResponseDto getComment(Long commentId) {
+
+        Comments comment = commentsRepo.findById(commentId)
+                .orElseThrow(() -> new NotAvailableException("Comment not found " + commentId));
+
+        return mapToDto(comment);
+    }
+
+    @Override
+    public List<CommentResponseDto> getCommentsByPostId(Long postId) {
+
+        return commentsRepo.findByPost_PostId(postId)
+                .stream()
+                .map(this::mapToDto)
+                .toList();
+    }
+
+    @Override
+    public List<CommentResponseDto> getCommentsByUserId(Long userId) {
+
+        return commentsRepo.findByUser_UserId(userId)
+                .stream()
+                .map(this::mapToDto)
+                .toList();
     }
 
     @Override
@@ -71,29 +86,17 @@ public class CommentsServiceImpl implements CommentsService {
 
         comment.setCommentText(dto.getCommentText());
 
-        Comments updated = commentsRepo.save(comment);
-
-        return mapToDto(updated);
+        return mapToDto(commentsRepo.save(comment));
     }
 
     @Override
-    public List<CommentResponseDto> getCommentsByPostId(Long postId) {
+    public void deleteComment(Long commentId) {
 
-        List<Comments> comments = commentsRepo.findByPost_PostId(postId);
+        if (!commentsRepo.existsById(commentId)) {
+            throw new NotAvailableException("Comment not found " + commentId);
+        }
 
-        return comments.stream()
-                .map(this::mapToDto)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<CommentResponseDto> getCommentsByUserId(Long userId) {
-
-        List<Comments> comments = commentsRepo.findByUser_UserId(userId);
-
-        return comments.stream()
-                .map(this::mapToDto)
-                .collect(Collectors.toList());
+        commentsRepo.deleteById(commentId);
     }
 
     private CommentResponseDto mapToDto(Comments comment) {
