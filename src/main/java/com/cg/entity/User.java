@@ -2,7 +2,15 @@ package com.cg.entity;
 
 import java.util.List;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
@@ -13,33 +21,38 @@ public class User {
     @Column
     private Long userId;
 
-    @Column(name = "username")
+    @Column(name = "username", unique = true, nullable = false)
     private String username;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Lob
+
     @Column(name = "profile_picture")
-    private byte[] profilePicture;
+    private String profilePicture;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Post> posts;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Comments> comments;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Like> likes;    
+    @JsonIgnore
+    private List<Like> likes;
+    @Column
+    private boolean enabled = true;
 
 	public User() {
 		
 	}
 
-	public User(Long userId, String username, String email, String password, byte[] profilePicture, List<Post> posts,
+	public User(Long userId, String username, String email, String password, String profilePicture, List<Post> posts,
 			List<Comments> comments, List<Like> likes) {
 		super();
 		this.userId = userId;
@@ -84,12 +97,18 @@ public class User {
 		this.password = password;
 	}
 
-	public byte[] getProfilePicture() {
+	
+
+	public String getProfilePicture() {
 		return profilePicture;
 	}
 
-	public void setProfilePicture(byte[] profilePicture) {
+	public void setProfilePicture(String profilePicture) {
 		this.profilePicture = profilePicture;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	public List<Post> getPosts() {
@@ -114,6 +133,11 @@ public class User {
 
 	public void setLikes(List<Like> likes) {
 		this.likes = likes;
+	}
+
+	public boolean isEnabled() {
+	
+		return enabled;
 	}
 }
     
