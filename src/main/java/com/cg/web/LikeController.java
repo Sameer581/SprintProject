@@ -8,14 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.cg.dto.LikeDto;
 import com.cg.exception.ValidationException;
@@ -41,27 +34,14 @@ public class LikeController {
 
     @GetMapping("/count/{postId}")
     public ResponseEntity<Integer> countLikesByPost(@PathVariable Long postId) {
-        int totalLikes = likeService.countLikesByPost(postId);
-        return new ResponseEntity<Integer>(totalLikes, HttpStatus.OK);
+        return new ResponseEntity<>(likeService.countLikesByPost(postId), HttpStatus.OK);
     }
 
     @GetMapping("/check/{userId}/{postId}")
     public ResponseEntity<Boolean> hasUserLiked(@PathVariable Long userId, @PathVariable Long postId) {
-        boolean liked = likeService.hasUserLiked(userId, postId);
-        return new ResponseEntity<Boolean>(liked, HttpStatus.OK);
+        return new ResponseEntity<>(likeService.hasUserLiked(userId, postId), HttpStatus.OK);
     }
 
-    @ExceptionHandler(ValidationException.class)
-    public ResponseEntity<Map<String, String>> handleValidationException(ValidationException ex) {
-
-        Map<String, String> errors = new HashMap<>();
-
-        ex.getErrors().forEach(error ->
-                errors.put(error.getField(), error.getDefaultMessage()));
-
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-    }
-    
     @GetMapping("/post/{postId}")
     public ResponseEntity<List<LikeDto>> getLikesByPost(@PathVariable Long postId) {
         return new ResponseEntity<>(likeService.getLikesByPost(postId), HttpStatus.OK);
@@ -70,5 +50,44 @@ public class LikeController {
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<LikeDto>> getLikesByUser(@PathVariable Long userId) {
         return new ResponseEntity<>(likeService.getLikesByUser(userId), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/remove/{userId}/{postId}")
+    public ResponseEntity<String> removeLike(@PathVariable Long userId, @PathVariable Long postId) {
+        likeService.removeLike(userId, postId);
+        return new ResponseEntity<>("Like removed successfully", HttpStatus.OK);
+    }
+
+    @GetMapping("/recent")
+    public ResponseEntity<List<LikeDto>> getRecentLikes() {
+        return new ResponseEntity<>(likeService.getRecentLikes(), HttpStatus.OK);
+    }
+
+    @GetMapping("/recent/{count}")
+    public ResponseEntity<List<LikeDto>> getRecentLikesByCount(@PathVariable int count) {
+        return new ResponseEntity<>(likeService.getRecentLikesByCount(count), HttpStatus.OK);
+    }
+
+    @GetMapping("/top-posts")
+    public ResponseEntity<List<Object[]>> getTopLikedPosts() {
+        return new ResponseEntity<>(likeService.getTopLikedPosts(), HttpStatus.OK);
+    }
+
+    @GetMapping("/count/user/{userId}")
+    public ResponseEntity<Integer> countLikesByUser(@PathVariable Long userId) {
+        return new ResponseEntity<>(likeService.countLikesByUser(userId), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/clear/post/{postId}")
+    public ResponseEntity<String> clearLikesByPost(@PathVariable Long postId) {
+        likeService.clearLikesByPost(postId);
+        return new ResponseEntity<>("All likes removed from post", HttpStatus.OK);
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<Map<String, String>> handleValidationException(ValidationException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getErrors().forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 }
