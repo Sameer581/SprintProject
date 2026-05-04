@@ -1,0 +1,30 @@
+<div class="card shadow-sm mb-4">
+  <div class="card-body">
+    <div class="d-flex align-items-center mb-3">
+      <div class="rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center me-3" style="width: 40px; height: 40px;">
+        <i class="bi bi-person-fill"></i>
+      </div>
+      <h6 class="mb-0">Create Post</h6>
+    </div>
+    <form (ngSubmit)="submitPost()">
+      <div class="mb-3">
+        <textarea 
+          class="form-control" 
+          rows="3" 
+          placeholder="What's on your mind?"
+          name="content"
+          [(ngModel)]="content"
+          required></textarea>
+      </div>
+      <div class="d-flex justify-content-end">
+        <button 
+          type="submit" 
+          class="btn btn-primary"
+          [disabled]="!content.trim() || isSubmitting">
+          <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+          Post
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

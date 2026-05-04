@@ -1,0 +1,103 @@
+<div class="container mt-4 mb-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="mb-0">Groups</h3>
+    <button class="btn btn-primary" (click)="toggleCreateForm()">
+      <i class="bi" [ngClass]="showCreateForm ? 'bi-x-lg' : 'bi-plus-lg'"></i> 
+      {{ showCreateForm ? 'Cancel' : 'Create Group' }}
+    </button>
+  </div>
+
+  <!-- Create Group Form -->
+  <div class="card shadow-sm border-0 mb-4" *ngIf="showCreateForm">
+    <div class="card-body bg-light">
+      <h5 class="card-title mb-3">Create a New Group</h5>
+      <form (ngSubmit)="createGroup()">
+        <div class="mb-3">
+          <label class="form-label">Group Name</label>
+          <input type="text" class="form-control" name="newGroupName" [(ngModel)]="newGroupName" placeholder="E.g., Angular Developers" required>
+        </div>
+        <button type="submit" class="btn btn-success" [disabled]="!newGroupName.trim() || isCreating">
+          <span class="spinner-border spinner-border-sm me-1" *ngIf="isCreating"></span>
+          Create Group
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <ul class="nav nav-tabs mb-4" id="groupsTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="discover-tab" data-bs-toggle="tab" data-bs-target="#discover" type="button" role="tab" aria-controls="discover" aria-selected="true">
+        Discover <span class="badge bg-secondary ms-1">{{ allGroups.length }}</span>
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="mygroups-tab" data-bs-toggle="tab" data-bs-target="#mygroups" type="button" role="tab" aria-controls="mygroups" aria-selected="false">
+        My Groups <span class="badge bg-primary ms-1">{{ myGroups.length }}</span>
+      </button>
+    </li>
+  </ul>
+
+  <!-- Tab Content -->
+  <div class="tab-content" id="groupsTabContent">
+    
+    <!-- Discover Tab -->
+    <div class="tab-pane fade show active" id="discover" role="tabpanel" aria-labelledby="discover-tab">
+      <div *ngIf="loadingAll" class="text-center my-4">
+        <div class="spinner-border text-primary" role="status"></div>
+      </div>
+      
+      <div *ngIf="!loadingAll && allGroups.length === 0" class="alert alert-light text-center border-0 shadow-sm">
+        No groups found. Why not create one?
+      </div>
+
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" *ngIf="!loadingAll && allGroups.length > 0">
+        <div class="col" *ngFor="let group of allGroups">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-3">
+                <div class="rounded bg-secondary d-flex justify-content-center align-items-center text-white me-3" style="width: 50px; height: 50px; font-size: 1.5rem;">
+                  <i class="bi bi-diagram-3-fill"></i>
+                </div>
+                <h5 class="card-title mb-0 fw-bold">{{ group.groupName }}</h5>
+              </div>
+            </div>
+            <div class="card-footer bg-white border-0 pb-3">
+              <a [routerLink]="['/groups', group.groupId]" class="btn btn-outline-primary w-100">View Group</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- My Groups Tab -->
+    <div class="tab-pane fade" id="mygroups" role="tabpanel" aria-labelledby="mygroups-tab">
+      <div *ngIf="loadingMy" class="text-center my-4">
+        <div class="spinner-border text-primary" role="status"></div>
+      </div>
+
+      <div *ngIf="!loadingMy && myGroups.length === 0" class="alert alert-light text-center border-0 shadow-sm">
+        You haven't joined any groups yet. Check out the Discover tab!
+      </div>
+
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" *ngIf="!loadingMy && myGroups.length > 0">
+        <div class="col" *ngFor="let group of myGroups">
+          <div class="card h-100 border-0 shadow-sm border-start border-4 border-primary">
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-3">
+                <div class="rounded bg-primary d-flex justify-content-center align-items-center text-white me-3" style="width: 50px; height: 50px; font-size: 1.5rem;">
+                  <i class="bi bi-diagram-3-fill"></i>
+                </div>
+                <h5 class="card-title mb-0 fw-bold">{{ group.groupName }}</h5>
+              </div>
+            </div>
+            <div class="card-footer bg-white border-0 pb-3">
+              <a [routerLink]="['/groups', group.groupId]" class="btn btn-primary w-100">Go to Group</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

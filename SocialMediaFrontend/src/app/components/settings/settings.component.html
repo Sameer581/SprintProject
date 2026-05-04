@@ -1,0 +1,86 @@
+<div class="container mt-4">
+  <h4 class="mb-4">Account Settings</h4>
+
+  <div class="row">
+    <!-- Username Update -->
+    <div class="col-md-8 mb-4">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <h5 class="card-title mb-3">Update Username</h5>
+          
+          <div *ngIf="usernameSuccess" class="alert alert-success py-2">{{ usernameSuccess }}</div>
+          <div *ngIf="usernameError" class="alert alert-danger py-2">{{ usernameError }}</div>
+          
+          <form (ngSubmit)="updateUsername()">
+            <div class="mb-3">
+              <label class="form-label text-muted">Current Username</label>
+              <input type="text" class="form-control bg-light" [value]="currentUsername" disabled>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">New Username</label>
+              <input type="text" class="form-control" name="newUsername" [(ngModel)]="newUsername" required>
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="!newUsername.trim() || isUpdatingUsername">
+              <span class="spinner-border spinner-border-sm me-1" *ngIf="isUpdatingUsername"></span>
+              Update Username
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Email Update -->
+    <div class="col-md-8 mb-4">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <h5 class="card-title mb-3">Update Email</h5>
+          
+          <div *ngIf="emailSuccess" class="alert alert-success py-2">{{ emailSuccess }}</div>
+          <div *ngIf="emailError" class="alert alert-danger py-2">{{ emailError }}</div>
+
+          <form (ngSubmit)="updateEmail()">
+            <div class="mb-3">
+              <label class="form-label text-muted">Current Email</label>
+              <input type="email" class="form-control bg-light" [value]="currentEmail" disabled>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">New Email Address</label>
+              <input type="email" class="form-control" name="newEmail" [(ngModel)]="newEmail" required>
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="!newEmail.trim() || isUpdatingEmail">
+              <span class="spinner-border spinner-border-sm me-1" *ngIf="isUpdatingEmail"></span>
+              Update Email
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Password Update -->
+    <div class="col-md-8 mb-4">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <h5 class="card-title mb-3">Change Password</h5>
+
+          <div *ngIf="passwordSuccess" class="alert alert-success py-2">{{ passwordSuccess }}</div>
+          <div *ngIf="passwordError" class="alert alert-danger py-2">{{ passwordError }}</div>
+
+          <form (ngSubmit)="updatePassword()">
+            <div class="mb-3">
+              <label class="form-label">New Password</label>
+              <input type="password" class="form-control" name="newPassword" [(ngModel)]="newPassword" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Confirm New Password</label>
+              <input type="password" class="form-control" name="confirmPassword" [(ngModel)]="confirmPassword" required>
+            </div>
+            <button type="submit" class="btn btn-warning" [disabled]="!newPassword || !confirmPassword || isUpdatingPassword">
+              <span class="spinner-border spinner-border-sm me-1" *ngIf="isUpdatingPassword"></span>
+              Update Password
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

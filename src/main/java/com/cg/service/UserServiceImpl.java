@@ -160,6 +160,7 @@ public class UserServiceImpl implements UserService {
         dto.setUserId(user.getUserId());
         dto.setUsername(user.getUsername());
         dto.setEmail(user.getEmail());
+        dto.setProfilePicture(user.getProfilePicture());
         return dto;
     }
 }

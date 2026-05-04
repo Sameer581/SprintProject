@@ -1,0 +1,7 @@
+<app-post-create (postCreated)="loadPosts()"></app-post-create>
+
+<div *ngIf="loading">Loading...</div>
+
+<div *ngFor="let post of posts">
+  <app-post-card [post]="post"></app-post-card>
+</div>

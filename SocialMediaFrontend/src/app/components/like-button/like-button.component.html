@@ -1,0 +1,8 @@
+<button 
+  class="btn btn-sm" 
+  [ngClass]="isLiked ? 'btn-danger' : 'btn-outline-danger'"
+  (click)="toggleLike()"
+  [disabled]="!userId">
+  <i class="bi" [ngClass]="isLiked ? 'bi-heart-fill' : 'bi-heart'"></i>
+  <span class="ms-1">{{ likeCount }}</span>
+</button>

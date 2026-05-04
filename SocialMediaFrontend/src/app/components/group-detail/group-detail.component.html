@@ -1,0 +1,101 @@
+<div class="container mt-4 mb-5" style="max-width: 900px;">
+  
+  <!-- Back Button -->
+  <a routerLink="/groups" class="text-decoration-none text-muted mb-3 d-inline-block">
+    <i class="bi bi-arrow-left"></i> Back to Groups
+  </a>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="text-center my-5">
+    <div class="spinner-border text-primary" role="status"></div>
+  </div>
+
+  <ng-container *ngIf="!loading && group">
+    
+    <!-- Group Header Banner -->
+    <div class="card border-0 shadow-sm mb-4 overflow-hidden">
+      <div class="bg-primary text-white p-5 d-flex align-items-end" style="height: 200px;">
+        <div class="d-flex align-items-center w-100">
+          <div class="rounded bg-white text-primary d-flex justify-content-center align-items-center me-4 shadow" style="width: 80px; height: 80px; font-size: 2.5rem;">
+            <i class="bi bi-diagram-3-fill"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h2 class="mb-1 fw-bold">{{ group.groupName }}</h2>
+            <span class="badge bg-light text-primary mt-1" *ngIf="memberStatus?.role === 'ADMIN'">Administrator</span>
+            <span class="badge bg-light text-primary mt-1" *ngIf="memberStatus?.role === 'MEMBER'">Member</span>
+            <span class="badge bg-warning text-dark mt-1" *ngIf="memberStatus?.status === 'PENDING'">Request Pending</span>
+          </div>
+          
+          <!-- Action Buttons -->
+          <div class="ms-auto">
+            <!-- Not a member -->
+            <button class="btn btn-light text-primary fw-bold px-4" 
+                    *ngIf="!memberStatus" 
+                    (click)="requestToJoin()" 
+                    [disabled]="actionLoading">
+              <span class="spinner-border spinner-border-sm me-1" *ngIf="actionLoading"></span>
+              Request to Join
+            </button>
+            
+            <!-- Pending -->
+            <button class="btn btn-outline-light fw-bold px-4 disabled" *ngIf="memberStatus?.status === 'PENDING'">
+              Request Sent
+            </button>
+            
+            <!-- Member/Admin Leave -->
+            <button class="btn btn-outline-light fw-bold px-4" 
+                    *ngIf="memberStatus && memberStatus.status !== 'PENDING'" 
+                    (click)="leaveGroup()" 
+                    [disabled]="actionLoading">
+              <span class="spinner-border spinner-border-sm me-1" *ngIf="actionLoading"></span>
+              Leave Group
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card-body p-4 bg-white">
+        <h5 class="fw-bold mb-3">About this Group</h5>
+        <p class="text-muted mb-0">No description available.</p>
+      </div>
+    </div>
+
+    <!-- Admin Dashboard (Visible only to Admins) -->
+    <div class="card border-0 shadow-sm" *ngIf="memberStatus?.role === 'ADMIN'">
+      <div class="card-header bg-white p-4 border-bottom">
+        <h5 class="mb-0 fw-bold"><i class="bi bi-shield-lock-fill text-primary me-2"></i> Admin Dashboard</h5>
+      </div>
+      <div class="card-body p-4 bg-light">
+        
+        <h6 class="mb-3 fw-bold">Pending Join Requests ({{ pendingRequests.length }})</h6>
+        
+        <div *ngIf="pendingRequests.length === 0" class="text-muted small">
+          No pending requests at the moment.
+        </div>
+
+        <div class="list-group" *ngIf="pendingRequests.length > 0">
+          <div class="list-group-item border-0 shadow-sm mb-2 rounded d-flex justify-content-between align-items-center p-3" 
+               *ngFor="let request of pendingRequests">
+            <div class="d-flex align-items-center">
+              <div class="rounded-circle bg-secondary d-flex justify-content-center align-items-center text-white me-3" style="width: 40px; height: 40px;">
+                <i class="bi bi-person-fill"></i>
+              </div>
+              <span class="fw-bold">User {{ request.userId }}</span>
+            </div>
+            <div>
+              <button class="btn btn-success btn-sm me-2 px-3" (click)="approveRequest(request.userId)">Approve</button>
+              <button class="btn btn-outline-danger btn-sm px-3" (click)="rejectRequest(request.userId)">Reject</button>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+  </ng-container>
+
+  <div *ngIf="!loading && !group" class="alert alert-danger text-center mt-5 border-0 shadow-sm py-4">
+    <h5 class="mb-0">Group not found</h5>
+  </div>
+
+</div>
