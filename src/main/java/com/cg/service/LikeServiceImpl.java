@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +32,6 @@ public class LikeServiceImpl implements LikeService {
     @Override
     @Transactional
     public LikeDto toggleLike(LikeDto likeDto) {
-
         User user = userRepo.findById(likeDto.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -83,33 +83,55 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     public List<LikeDto> getLikesByPost(Long postId) {
-        List<Like> likes = likeRepo.findByPostPostId(postId);
-
-        return likes.stream().map(like -> {
-            LikeDto dto = new LikeDto();
-            dto.setLikeId(like.getLikeId());
-            dto.setUserId(like.getUser().getUserId());
-            dto.setPostId(like.getPost().getPostId());
-            dto.setTimestamp(like.getTimestamp());
-            dto.setMessage("Like fetched successfully");
-            dto.setTotalLikes(likeRepo.countByPostPostId(postId));
-            return dto;
-        }).toList();
+        return likeRepo.findByPostPostId(postId).stream().map(this::convertToDto).toList();
     }
 
     @Override
     public List<LikeDto> getLikesByUser(Long userId) {
-        List<Like> likes = likeRepo.findByUserUserId(userId);
+        return likeRepo.findByUserUserId(userId).stream().map(this::convertToDto).toList();
+    }
 
-        return likes.stream().map(like -> {
-            LikeDto dto = new LikeDto();
-            dto.setLikeId(like.getLikeId());
-            dto.setUserId(like.getUser().getUserId());
-            dto.setPostId(like.getPost().getPostId());
-            dto.setTimestamp(like.getTimestamp());
-            dto.setMessage("Like fetched successfully");
-            dto.setTotalLikes(likeRepo.countByPostPostId(like.getPost().getPostId()));
-            return dto;
-        }).toList();
+    @Override
+    public void removeLike(Long userId, Long postId) {
+        likeRepo.deleteByUserUserIdAndPostPostId(userId, postId);
+    }
+
+    @Override
+    public List<LikeDto> getRecentLikes() {
+        return likeRepo.findAllByOrderByTimestampDesc().stream().map(this::convertToDto).toList();
+    }
+
+    @Override
+    public List<LikeDto> getRecentLikesByCount(int count) {
+        return likeRepo.findAllByOrderByTimestampDesc(PageRequest.of(0, count))
+                .stream()
+                .map(this::convertToDto)
+                .toList();
+    }
+
+    @Override
+    public List<Object[]> getTopLikedPosts() {
+        return likeRepo.findTopLikedPosts();
+    }
+
+    @Override
+    public int countLikesByUser(Long userId) {
+        return likeRepo.countByUserUserId(userId);
+    }
+
+    @Override
+    public void clearLikesByPost(Long postId) {
+        likeRepo.deleteByPostPostId(postId);
+    }
+
+    private LikeDto convertToDto(Like like) {
+        LikeDto dto = new LikeDto();
+        dto.setLikeId(like.getLikeId());
+        dto.setUserId(like.getUser().getUserId());
+        dto.setPostId(like.getPost().getPostId());
+        dto.setTimestamp(like.getTimestamp());
+        dto.setMessage("Like fetched successfully");
+        dto.setTotalLikes(likeRepo.countByPostPostId(like.getPost().getPostId()));
+        return dto;
     }
 }

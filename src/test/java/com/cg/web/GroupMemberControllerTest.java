@@ -44,18 +44,17 @@ public class GroupMemberControllerTest {
     void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(groupMemberController).build();
 
-        // ── GroupMemberDto setup ──────────────────────────────────────────────
         groupMemberDto = new GroupMemberDto();
         groupMemberDto.setGroupId(1L);
         groupMemberDto.setUserId(101L);
 
-        // ── GroupDto setup ────────────────────────────────────────────────────
+
         groupDto = new GroupDto();
         groupDto.setGroupId(1L);
         groupDto.setGroupName("TestGroup");
     }
 
-    // ─── POST /groups/{groupId}/members ──────────────────────────────────────
+
 
     @Test
     void testAddMember_success() throws Exception {
@@ -68,7 +67,6 @@ public class GroupMemberControllerTest {
                 .andExpect(jsonPath("$.msg").value("Member added successfully: userId "));
     }
 
-    // ─── GET /groups/user/{userId}/groups ─────────────────────────────────────
 
     @Test
     void testGetUserGroups_success() throws Exception {
@@ -81,7 +79,7 @@ public class GroupMemberControllerTest {
                 .andExpect(jsonPath("$[0].groupName").value("TestGroup"));
     }
 
-    // ─── GET /groups/{groupId}/members/count ──────────────────────────────────
+
 
     @Test
     void testGetMemberCount_success() throws Exception {
@@ -92,7 +90,6 @@ public class GroupMemberControllerTest {
                 .andExpect(content().string("5"));
     }
 
-    // ─── GET /groups/name/{groupName}/members ─────────────────────────────────
 
     @Test
     void testGetMembersByGroupName_success() throws Exception {
@@ -105,7 +102,6 @@ public class GroupMemberControllerTest {
                 .andExpect(jsonPath("$[0].userId").value(101));
     }
 
-    // ─── DELETE /groups/{groupId}/members/{userId} ────────────────────────────
 
     @Test
     void testRemoveMember_success() throws Exception {
@@ -115,8 +111,6 @@ public class GroupMemberControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.msg").value("Member removed successfully: userId "));
     }
-
-    // ─── GET /groups/{groupId}/members ────────────────────────────────────────
 
     @Test
     void testGetMembers_success() throws Exception {
