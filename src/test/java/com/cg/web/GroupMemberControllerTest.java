@@ -47,17 +47,28 @@ public class GroupMemberControllerTest {
     void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(groupMemberController).build();
 
+<<<<<<< HEAD
         
+=======
+>>>>>>> 20d76212d67efbe9a1606e347780297075b6db79
         groupMemberDto = new GroupMemberDto();
         groupMemberDto.setUserId(101L);
         groupMemberDto.setRole("MEMBER");
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 20d76212d67efbe9a1606e347780297075b6db79
         groupDto = new GroupDto();
         groupDto.setGroupId(1L);
         groupDto.setGroupName("TestGroup");
     }
 
+<<<<<<< HEAD
    
+=======
+
+>>>>>>> 20d76212d67efbe9a1606e347780297075b6db79
 
     @Test
     void testAddMember_success() throws Exception {
@@ -72,7 +83,10 @@ public class GroupMemberControllerTest {
                 .andExpect(jsonPath("$.msg").value("Member added successfully: userId "));
     }
 
+<<<<<<< HEAD
     
+=======
+>>>>>>> 20d76212d67efbe9a1606e347780297075b6db79
 
     @Test
     void testGetUserGroups_success() throws Exception {
@@ -86,7 +100,11 @@ public class GroupMemberControllerTest {
                 .andExpect(jsonPath("$[0].groupName").value("TestGroup"));
     }
 
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 20d76212d67efbe9a1606e347780297075b6db79
 
     @Test
     void testGetMemberCount_success() throws Exception {
@@ -98,7 +116,10 @@ public class GroupMemberControllerTest {
                 .andExpect(content().string("5"));
     }
 
+<<<<<<< HEAD
     
+=======
+>>>>>>> 20d76212d67efbe9a1606e347780297075b6db79
 
     @Test
     void testGetMembersByGroupName_success() throws Exception {
@@ -114,7 +135,10 @@ public class GroupMemberControllerTest {
                 .andExpect(jsonPath("$[0].userId").value(101));
     }
 
+<<<<<<< HEAD
     
+=======
+>>>>>>> 20d76212d67efbe9a1606e347780297075b6db79
 
     @Test
     void testRemoveMember_success() throws Exception {
@@ -126,8 +150,11 @@ public class GroupMemberControllerTest {
                 .andExpect(jsonPath("$.msg").value("Member removed successfully: userId "));
     }
 
+<<<<<<< HEAD
     /
 
+=======
+>>>>>>> 20d76212d67efbe9a1606e347780297075b6db79
     @Test
     void testGetMembers_success() throws Exception {
 
