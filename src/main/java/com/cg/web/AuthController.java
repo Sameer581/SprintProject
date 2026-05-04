@@ -20,12 +20,11 @@ public class AuthController {
 		super();
 		this.authService = authService;
 	}
-
-
-
+    
 	@PostMapping("/login")
     public AuthResponse login(@RequestBody AuthRequest request) {
         String token = authService.login(request.getEmail(), request.getPassword());
         return new AuthResponse(token);
     }
+	
 }

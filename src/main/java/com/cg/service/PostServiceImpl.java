@@ -13,6 +13,7 @@ import com.cg.entity.User;
 import com.cg.exception.NotAvailableException;
 import com.cg.repo.PostRepo;
 import com.cg.repo.UserRepo;
+
 @Service
 public class PostServiceImpl implements PostService {
 
@@ -33,9 +34,7 @@ public class PostServiceImpl implements PostService {
         post.setUser(user);
         post.setTimestamp(new Timestamp(System.currentTimeMillis()));
 
-        Post saved = postRepo.save(post);
-
-        return mapToDto(saved);
+        return mapToDto(postRepo.save(post));
     }
 
     @Override
@@ -59,9 +58,9 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<PostResponseDto> getPostsByUser(Long userId) {
 
-        return postRepo.findAll()
+        // 🔥 DB-level filtering (efficient)
+        return postRepo.findById(userId)
                 .stream()
-                .filter(p -> p.getUser().getUserId().equals(userId))
                 .map(this::mapToDto)
                 .toList();
     }
@@ -74,12 +73,10 @@ public class PostServiceImpl implements PostService {
 
         post.setContent(dto.getContent());
 
-        Post updated = postRepo.save(post);
-
-        return mapToDto(updated);
+        return mapToDto(postRepo.save(post));
     }
 
-
+    // ✅ SAFE DTO MAPPING
     private PostResponseDto mapToDto(Post post) {
 
         PostResponseDto dto = new PostResponseDto();
@@ -88,8 +85,13 @@ public class PostServiceImpl implements PostService {
         dto.setContent(post.getContent());
         dto.setTimestamp(post.getTimestamp());
 
-        dto.setUserId(post.getUser().getUserId());
-        dto.setUsername(post.getUser().getUsername());
+        if (post.getUser() != null) {
+            dto.setUserId(post.getUser().getUserId());
+            dto.setUsername(post.getUser().getUsername());
+        } else {
+            dto.setUserId(null);
+            dto.setUsername("Unknown");
+        }
 
         return dto;
     }

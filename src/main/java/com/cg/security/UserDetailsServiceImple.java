@@ -35,8 +35,8 @@ public class UserDetailsServiceImple implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(
             user.getUsername(),
             user.getPassword(),
-            user.isEnabled(),
-            true, true, true,
+           // user.isEnabled(),
+          //  true, true, true,
             authorities
         );
     }

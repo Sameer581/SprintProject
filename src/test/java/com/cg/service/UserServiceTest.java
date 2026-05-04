@@ -102,7 +102,7 @@ public class UserServiceTest {
 
         UserResponseDto result = userService.getUserById(1L);
 
-        assertEquals(1L, result.getUserID());
+        assertEquals(1L, result.getUserId());
         assertEquals("rahul", result.getUsername());
     }
 

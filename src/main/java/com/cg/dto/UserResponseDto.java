@@ -2,39 +2,44 @@ package com.cg.dto;
 
 public class UserResponseDto {
 
-    private Long userID;
+    private Long userId;
     private String username;
     private String email;
+   
+	public UserResponseDto() {
+	}
 
-    public UserResponseDto() {}
+	public UserResponseDto(Long userId, String username, String email) {
+		super();
+		this.userId = userId;
+		this.username = username;
+		this.email = email;
+	}
 
-    public UserResponseDto(Long userID, String username, String email) {
-        this.userID = userID;
-        this.username = username;
-        this.email = email;
-    }
+	public Long getUserId() {
+		return userId;
+	}
 
-    public Long getUserID() {
-        return userID;
-    }
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 
-    public void setUserID(Long userID) {
-        this.userID = userID;
-    }
+	public String getUsername() {
+		return username;
+	}
 
-    public String getUsername() {
-        return username;
-    }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
 }
+
+    

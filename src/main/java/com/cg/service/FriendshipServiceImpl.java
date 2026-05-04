@@ -78,7 +78,7 @@ public class FriendshipServiceImpl implements FriendshipService {
 	        Friendship friendship = new Friendship();
 	        friendship.setUser1(sender);
 	        friendship.setUser2(receiver);
-	        friendship.setStatus(FriendshipStatus.PENDING);
+	        friendship.setStatus(FriendshipStatus.pending);
 
 	        return mapToDto(friendshipRepo.save(friendship));
 	}
@@ -91,7 +91,7 @@ public class FriendshipServiceImpl implements FriendshipService {
 		Friendship friendship = friendshipRepo.findById(friendshipId)
                 .orElseThrow(() -> new NotAvailableException("Friend request not found"));
 
-        friendship.setStatus(FriendshipStatus.ACCEPTED);
+        friendship.setStatus(FriendshipStatus.accepted);
 
         return mapToDto(friendshipRepo.save(friendship));
 	}
@@ -113,7 +113,7 @@ public class FriendshipServiceImpl implements FriendshipService {
 		User user = userRepo.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
-        return friendshipRepo.findPendingRequestsForUser(user, FriendshipStatus.PENDING)
+        return friendshipRepo.findPendingRequestsForUser(user, FriendshipStatus.pending)
                 .stream()
                 .map(this::mapToDto)
                 .collect(Collectors.toList());
@@ -139,7 +139,7 @@ public class FriendshipServiceImpl implements FriendshipService {
 		 User user = userRepo.findById(userId)
 	                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
-	        return friendshipRepo.findByUserAndStatus(user, FriendshipStatus.ACCEPTED)
+	        return friendshipRepo.findByUserAndStatus(user, FriendshipStatus.accepted)
 	                .stream()
 	                .map(this::mapToDto)
 	                .collect(Collectors.toList());
@@ -198,7 +198,7 @@ public class FriendshipServiceImpl implements FriendshipService {
 	public Long getFriendsCount(Long userId) {
 	    return friendshipRepo.countByUserIdAndStatus(
 	            userId,
-	            FriendshipStatus.ACCEPTED
+	            FriendshipStatus.accepted
 	    );
 	}
 	

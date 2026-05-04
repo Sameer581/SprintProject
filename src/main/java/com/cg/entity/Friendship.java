@@ -2,6 +2,7 @@ package com.cg.entity;
 
 import com.cg.enums.FriendshipStatus;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -18,6 +19,7 @@ public class Friendship {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="friendship_id")
     private Long friendshipId;
 
     @ManyToOne

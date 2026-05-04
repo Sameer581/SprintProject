@@ -26,7 +26,7 @@ public class UserController {
     public ResponseEntity<SuccessMessageDto> registerUser(@Valid @RequestBody UserDto userDto) {
         UserResponseDto created = userService.createUser(userDto);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new SuccessMessageDto("User registered successfully", created.getUserID()));
+                .body(new SuccessMessageDto("User registered successfully", created.getUserId()));
     }
 
     // GET /users/{id}

@@ -18,16 +18,16 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name="user_id")
     private Long userId;
 
-    @Column(name = "username", unique = true, nullable = false)
+    @Column(name = "username")
     private String username;
 
-    @Column(name = "email", unique = true, nullable = false)
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password")
     private String password;
 
 
@@ -45,8 +45,8 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Like> likes;
-    @Column
-    private boolean enabled = true;
+//    @Column
+//    private boolean enabled = true;
 
 	public User() {
 		
@@ -106,10 +106,10 @@ public class User {
 	public void setProfilePicture(String profilePicture) {
 		this.profilePicture = profilePicture;
 	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
+//
+//	public void setEnabled(boolean enabled) {
+//		this.enabled = enabled;
+//	}
 
 	public List<Post> getPosts() {
 		return posts;
@@ -135,10 +135,10 @@ public class User {
 		this.likes = likes;
 	}
 
-	public boolean isEnabled() {
-	
-		return enabled;
-	}
+//	public boolean isEnabled() {
+//	
+//		return enabled;
+//	}
 }
     
     

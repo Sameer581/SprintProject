@@ -48,7 +48,7 @@ public class UserControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
 
         userResponseDto = new UserResponseDto();
-        userResponseDto.setUserID(1L);
+        userResponseDto.setUserId(1L);
         userResponseDto.setUsername("rahul");
         userResponseDto.setEmail("rahul@gmail.com");
 

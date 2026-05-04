@@ -17,12 +17,10 @@ import jakarta.servlet.http.HttpServletResponse;
 public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
-    
 
     public JwtFilter(JwtUtil jwtUtil) {
-		super();
-		this.jwtUtil = jwtUtil;
-	}
+        this.jwtUtil = jwtUtil;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -30,8 +28,14 @@ public class JwtFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
+        // ✅ FIX: Handle preflight request FIRST
+        if (request.getMethod().equals("OPTIONS")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String path = request.getRequestURI();
-        
+
         if (path.startsWith("/auth") ||
             path.startsWith("/swagger-ui") ||
             path.startsWith("/v3/api-docs")) {
@@ -43,7 +47,6 @@ public class JwtFilter extends OncePerRequestFilter {
         String header = request.getHeader("Authorization");
 
         if (header != null && header.startsWith("Bearer ")) {
-
             try {
                 String token = header.substring(7);
                 String email = jwtUtil.extractEmail(token);
@@ -54,7 +57,6 @@ public class JwtFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(auth);
 
             } catch (Exception e) {
-                // ✅ Prevent crash → important for Swagger
                 SecurityContextHolder.clearContext();
             }
         }

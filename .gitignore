@@ -49,3 +49,5 @@ node_modules/
 target/
 bin/
 *.log
+
+pom.xml

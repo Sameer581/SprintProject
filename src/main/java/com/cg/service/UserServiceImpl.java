@@ -157,7 +157,7 @@ public class UserServiceImpl implements UserService {
     // password is NOT included here — so it NEVER appears in any response
     private UserResponseDto convertToResponseDto(User user) {
         UserResponseDto dto = new UserResponseDto();
-        dto.setUserID(user.getUserId());
+        dto.setUserId(user.getUserId());
         dto.setUsername(user.getUsername());
         dto.setEmail(user.getEmail());
         return dto;

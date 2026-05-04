@@ -20,6 +20,32 @@ public class AuthServiceImpl implements AuthService {
 		this.userRepo = userRepo;
 		this.jwtUtil = jwtUtil;
 	}
+    
+    @Override
+    @Transactional
+    public String signUp(String name, String username, String email, String password) {
+
+        // Optional: check if user already exists
+        if (userRepo.findByEmail(email).isPresent()) {
+            return "User already exists with this email";
+        }
+
+        if (userRepo.findByUsername(username).isPresent()) {
+            return "Username already taken";
+        }
+
+        // Create new user
+        User user = new User();
+        user.setUsername(name);
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPassword(password);
+
+        // Save user
+        userRepo.save(user);
+
+        return "User registered successfully";
+    }
 
 	@Override
 	@Transactional
