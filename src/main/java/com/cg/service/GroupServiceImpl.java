@@ -1,12 +1,14 @@
 package com.cg.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.dto.GroupDto;
+import com.cg.dto.GroupSummaryDto;
 import com.cg.entity.Group;
 import com.cg.entity.GroupMember;
 import com.cg.entity.User;
@@ -169,4 +171,46 @@ public class GroupServiceImpl implements GroupService {
 
         groupRepo.delete(group);
     }
+    
+    @Override
+    public GroupSummaryDto getGroupSummary(Long groupId) {
+
+        Group group = groupRepo.findById(groupId)
+                .orElseThrow(() -> new ResourceNotFoundException("Group", "groupId", groupId));
+
+        List<GroupMember> members = groupMemberRepo.findByGroup(group);
+
+        Map<String, Long> roleCounts = members.stream()
+                .collect(Collectors.groupingBy(GroupMember::getRole, Collectors.counting()));
+
+        return new GroupSummaryDto(
+                group.getGroupId(),
+                group.getGroupName(),
+                group.getAdmin().getUserId(),
+                group.getAdmin().getUsername(),    
+                members.size(),
+                roleCounts
+        );
+    }
+    
+    
+    @Override
+    public List<GroupDto> searchGroupsByName(String keyword) {
+
+        if (keyword == null || keyword.trim().isEmpty()) {
+            throw new ValidationException("keyword", "Search keyword cannot be blank");
+        }
+
+        List<Group> groups = groupRepo.findByGroupNameContainingIgnoreCase(keyword);
+
+        if (groups.isEmpty()) {
+            throw new ResourceNotFoundException("Groups", "keyword", keyword);
+        }
+
+        return groups.stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+    }
+    
+    
 }

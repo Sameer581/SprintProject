@@ -20,7 +20,7 @@ public class Group {
     @JoinColumn(name = "admin_id")
     private User admin;
 
-    //new
+    
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<GroupMember> members;
 
