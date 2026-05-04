@@ -4,10 +4,10 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 public class GroupMemberDto {
-
+/*
     @NotNull(message = "Group ID is required")
     @Min(value = 1, message = "Group ID must be valid")
-    private Long groupId;
+    private Long groupId;*/
 
     @NotNull(message = "User ID is required")
     @Min(value = 1, message = "User ID must be valid")
@@ -15,14 +15,27 @@ public class GroupMemberDto {
 
     
     private String role;
+    
+    private String status;
 
     public GroupMemberDto() {
+    	
     }
+    
+    
+public GroupMemberDto(Long userId,String role, String status) {
+		this.userId = userId;
+		this.role = role;
+		this.status = status;
+	}
 
-    public GroupMemberDto(Long groupId, Long userId, String role) {
+
+/*
+    public GroupMemberDto(Long groupId, Long userId, String role,String status) {
         this.groupId = groupId;
         this.userId = userId;
         this.role = role;
+        this.status = status;
     }
 
     public Long getGroupId() {
@@ -31,7 +44,7 @@ public class GroupMemberDto {
 
     public void setGroupId(Long groupId) {
         this.groupId = groupId;
-    }
+    }*/
 
     public Long getUserId() {
         return userId;
@@ -48,4 +61,12 @@ public class GroupMemberDto {
     public void setRole(String role) {
         this.role = role;
     }
+    
+    public String getStatus() { 
+        return status; 
+        }
+    public void setStatus(String status) {
+         this.status = status; 
+         }
+    
 }

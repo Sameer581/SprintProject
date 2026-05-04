@@ -16,6 +16,7 @@ public interface GroupRepo extends JpaRepository<Group, Long> {
 	List<Group> findByAdminUserId(Long adminId);
 	Optional<Group> findByGroupName(String groupName);
 	
+	List<Group> findByGroupNameContainingIgnoreCase(String keyword);
 	
 
 }
