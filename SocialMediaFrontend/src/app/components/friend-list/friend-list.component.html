@@ -38,9 +38,8 @@
               </div>
               <div>
                 <h6 class="mb-1 fw-bold">
-                  <!-- The backend DTO doesn't include friend username, so we link by userId. We assume userId2 is the friend if currentUserId === userId1 -->
                   <a [routerLink]="['/profile', friend.userId1 === currentUserId ? friend.userId2 : friend.userId1]" class="text-decoration-none text-dark">
-                    User {{ friend.userId1 === currentUserId ? friend.userId2 : friend.userId1 }}
+                    {{ friend.userId1 === currentUserId ? (friend.username2 || 'User ' + friend.userId2) : (friend.username1 || 'User ' + friend.userId1) }}
                   </a>
                 </h6>
                 <small class="text-muted">Friend</small>
@@ -72,7 +71,7 @@
                 <div>
                   <h6 class="mb-1 fw-bold">
                     <a [routerLink]="['/profile', request.userId1]" class="text-decoration-none text-dark">
-                      User {{ request.userId1 }}
+                      {{ request.username1 || 'User ' + request.userId1 }}
                     </a>
                   </h6>
                   <small class="text-muted">Sent you a request</small>

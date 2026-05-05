@@ -1,21 +1,67 @@
-<div class="container mt-5" style="max-width: 400px;">
-  <h3 class="mb-3">Login</h3>
+<div class="auth-wrapper">
+  <div class="auth-card">
 
-  <input
-    type="email"
-    class="form-control mb-2"
-    placeholder="Email"
-    [(ngModel)]="email"
-  />
+    <!-- Logo / Title -->
+    <div class="auth-header">
+      <h2>SocialConnect</h2>
+      <p>{{ mode === 'login' ? 'Welcome back!' : 'Create your account' }}</p>
+    </div>
 
-  <input
-    type="password"
-    class="form-control mb-3"
-    placeholder="Password"
-    [(ngModel)]="password"
-  />
+    <!-- Tab Toggle -->
+    <div class="auth-tabs">
+      <button [class.active]="mode === 'login'" (click)="switchTo('login')">Login</button>
+      <button [class.active]="mode === 'register'" (click)="switchTo('register')">Register</button>
+    </div>
 
-  <button class="btn btn-primary w-100" (click)="login()">
-    Login
-  </button>
-</div>
+    <!-- Alerts -->
+    <div class="alert alert-danger" *ngIf="errorMsg">{{ errorMsg }}</div>
+    <div class="alert alert-success" *ngIf="successMsg">{{ successMsg }}</div>
+
+    <!-- LOGIN FORM -->
+    <div *ngIf="mode === 'login'" class="auth-form">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="you@example.com" [(ngModel)]="email" />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" placeholder="••••••••" [(ngModel)]="password" />
+      </div>
+      <button class="btn-primary" (click)="login()">Login</button>
+      <p class="switch-hint">
+        Don't have an account?
+        <a (click)="switchTo('register')">Register here</a>
+      </p>
+    </div>
+
+    <!-- REGISTER FORM -->
+    <div *ngIf="mode === 'register'" class="auth-form">
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" placeholder="johndoe" [(ngModel)]="username" />
+      </div>
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" placeholder="John Doe" [(ngModel)]="custName" />
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="text" placeholder="+91 9999999999" [(ngModel)]="phoneNo" />
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="you@example.com" [(ngModel)]="regEmail" />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" placeholder="••••••••" [(ngModel)]="regPassword" />
+      </div>
+      <button class="btn-primary" (click)="register()">Create Account</button>
+      <p class="switch-hint">
+        Already have an account?
+        <a (click)="switchTo('login')">Login here</a>
+      </p>
+    </div>
+
+  </div>
+</div>

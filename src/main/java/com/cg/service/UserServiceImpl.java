@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setUsername(userDto.getUsername());
         user.setEmail(userDto.getEmail());
-        user.setPassword("default123"); // password set internally, never exposed
+        user.setPassword(userDto.getPassword()); // use actual password from DTO
         User savedUser = userRepository.save(user);
         return convertToResponseDto(savedUser);
     }
