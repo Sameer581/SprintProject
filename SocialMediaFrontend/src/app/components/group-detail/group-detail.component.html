@@ -60,6 +60,69 @@
       </div>
     </div>
 
+    <!-- Group Members (Visible to everyone) -->
+    <div class="card border-0 shadow-sm mb-4">
+      <div class="card-header bg-white p-4 border-bottom d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 fw-bold"><i class="bi bi-people-fill text-primary me-2"></i> Group Members ({{ activeMembers.length }})</h5>
+        
+        <!-- Search Bar -->
+        <div class="input-group" style="max-width: 300px;">
+          <input type="text" class="form-control" placeholder="Search members..." 
+                 [(ngModel)]="searchQuery" (keyup.enter)="searchMembers()">
+          <button class="btn btn-outline-primary" type="button" (click)="searchMembers()">
+            <i class="bi bi-search"></i>
+          </button>
+        </div>
+      </div>
+      
+      <div class="card-body p-4 bg-light">
+        <div *ngIf="activeMembers.length === 0" class="text-muted text-center py-3">
+          No members found.
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-2 g-3" *ngIf="activeMembers.length > 0">
+          <div class="col" *ngFor="let member of activeMembers">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                  <div class="rounded-circle bg-secondary d-flex justify-content-center align-items-center text-white me-3" style="width: 45px; height: 45px;">
+                    <i class="bi bi-person-fill"></i>
+                  </div>
+                  <div>
+                    <!-- Fallback to "User X" if username is not provided in basic DTO -->
+                    <h6 class="mb-0 fw-bold">
+                      <a [routerLink]="['/profile', member.userId]" class="text-decoration-none text-dark">
+                        {{ member.username || 'User ' + member.userId }}
+                        <span class="badge bg-primary ms-2" *ngIf="member.userId === currentUserId">You</span>
+                      </a>
+                    </h6>
+                    <small class="text-muted" *ngIf="member.role === 'ADMIN'">Administrator</small>
+                    <small class="text-muted" *ngIf="member.role === 'MEMBER'">Member</small>
+                  </div>
+                </div>
+                
+                <div>
+                  <!-- Make Admin Button (Only visible to current Admins, and not for themselves or other admins) -->
+                  <button *ngIf="memberStatus?.role === 'ADMIN' && member.role !== 'ADMIN' && member.userId !== currentUserId" 
+                          class="btn btn-sm btn-outline-success me-2" 
+                          (click)="makeAdmin(member.userId)">
+                    Make Admin
+                  </button>
+                  
+                  <!-- Transfer Ownership Button (Only visible to the actual Group Owner) -->
+                  <button *ngIf="group?.adminId === currentUserId && member.userId !== currentUserId" 
+                          class="btn btn-sm btn-warning" 
+                          (click)="transferOwnership(member.userId)">
+                    Transfer Ownership
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Admin Dashboard (Visible only to Admins) -->
     <div class="card border-0 shadow-sm" *ngIf="memberStatus?.role === 'ADMIN'">
       <div class="card-header bg-white p-4 border-bottom">

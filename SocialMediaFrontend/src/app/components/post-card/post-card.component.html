@@ -17,11 +17,14 @@
     <p class="card-text">{{ post.content }}</p>
 
     <!-- Actions (Like & Comment Toggle) -->
-    <div class="d-flex border-top pt-3 mt-3 gap-2">
+    <div class="d-flex border-top pt-3 mt-3 gap-4">
       <app-like-button [postId]="post.postId"></app-like-button>
       
-      <button class="btn btn-sm btn-outline-secondary d-flex align-items-center" (click)="toggleComments()">
-        <i class="bi bi-chat-text me-1"></i> Comments
+      <button class="btn btn-sm border-0 d-flex align-items-center text-muted" 
+              (click)="toggleComments()"
+              style="background: transparent; box-shadow: none; padding: 0;">
+        <i class="bi bi-chat-text fs-5"></i>
+        <span class="ms-1 fw-bold" style="font-size: 1rem;">Comments</span>
       </button>
     </div>
 
@@ -63,9 +66,10 @@
           required>
         <button 
           type="submit" 
-          class="btn btn-primary rounded-pill px-3"
-          [disabled]="!newCommentText.trim() || isSubmittingComment">
-          <i class="bi bi-send" *ngIf="!isSubmittingComment"></i>
+          class="btn btn-primary rounded-pill px-3 d-flex justify-content-center align-items-center"
+          [disabled]="!newCommentText.trim() || isSubmittingComment"
+          style="min-width: 50px;">
+          <i class="bi bi-send-fill" *ngIf="!isSubmittingComment"></i>
           <span class="spinner-border spinner-border-sm" *ngIf="isSubmittingComment"></span>
         </button>
       </form>

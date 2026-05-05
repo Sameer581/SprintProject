@@ -62,6 +62,14 @@ export class GroupMemberService {
     return this.http.patch<SuccessMessage>(`${this.baseUrl}/${groupId}/members/${userId}/role`, dto);
   }
 
+  // PATCH /groups/{groupId}/transfer-admin
+  transferAdmin(groupId: number, currentAdminId: number, newAdminId: number): Observable<SuccessMessage> {
+    const params = new HttpParams()
+      .set('currentAdminId', currentAdminId.toString())
+      .set('newAdminId', newAdminId.toString());
+    return this.http.patch<SuccessMessage>(`${this.baseUrl}/${groupId}/transfer-admin`, {}, { params });
+  }
+
   // GET /groups/{groupId}/members/search?name=
   searchMembers(groupId: number, name: string): Observable<GroupMemberDetail[]> {
     const params = new HttpParams().set('name', name);

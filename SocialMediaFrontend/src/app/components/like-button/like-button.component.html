@@ -1,8 +1,9 @@
 <button 
-  class="btn btn-sm" 
-  [ngClass]="isLiked ? 'btn-danger' : 'btn-outline-danger'"
+  class="btn btn-sm border-0 d-flex align-items-center" 
+  [ngClass]="isLiked ? 'text-danger' : 'text-muted'"
   (click)="toggleLike()"
-  [disabled]="!userId">
-  <i class="bi" [ngClass]="isLiked ? 'bi-heart-fill' : 'bi-heart'"></i>
-  <span class="ms-1">{{ likeCount }}</span>
+  [disabled]="!userId"
+  style="background: transparent; box-shadow: none; padding: 0;">
+  <i class="bi fs-5" [ngClass]="isLiked ? 'bi-heart-fill' : 'bi-heart'"></i>
+  <span class="ms-1 fw-bold" style="font-size: 1rem;">{{ likeCount }}</span>
 </button>

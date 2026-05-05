@@ -137,6 +137,20 @@ public class GroupMemberController {
         );
     }
 
+    @PatchMapping("/{groupId}/transfer-admin")
+    public SuccessMessageDto transferAdmin(
+            @PathVariable Long groupId,
+            @RequestParam Long currentAdminId,
+            @RequestParam Long newAdminId) {
+
+        groupMemberService.transferAdmin(groupId, currentAdminId, newAdminId);
+
+        return new SuccessMessageDto(
+                "Group ownership transferred successfully to userId ",
+                newAdminId
+        );
+    }
+
     
     @GetMapping("/{groupId}/members/search")
     public List<GroupMemberDetailDto> searchMembers(
