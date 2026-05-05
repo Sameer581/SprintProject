@@ -72,17 +72,34 @@ export class GroupDetailComponent implements OnInit {
         const me = members.find(m => m.userId === this.currentUserId);
         if (me) {
           this.memberStatus = me;
-          
-          // If they are an admin, load pending requests
           if (me.role === 'ADMIN') {
             this.loadPendingRequests();
           } else {
             this.loading = false;
           }
         } else {
-          this.memberStatus = null;
-          this.loading = false;
+          // Not an active member, check if they have a pending request
+          this.checkIfPending();
         }
+      },
+      error: (err) => {
+        // Backend returns 404 if no members are active. Check pending anyway.
+        this.checkIfPending();
+      }
+    });
+  }
+
+  checkIfPending() {
+    if (!this.groupId || !this.currentUserId) return;
+    this.groupMemberService.getPendingRequests(this.groupId).subscribe({
+      next: (requests) => {
+        const mePending = requests.find(r => r.userId === this.currentUserId);
+        if (mePending) {
+          this.memberStatus = { userId: this.currentUserId!, role: 'MEMBER', status: 'PENDING' };
+        } else {
+          this.memberStatus = null;
+        }
+        this.loading = false;
       },
       error: (err) => {
         this.memberStatus = null;
