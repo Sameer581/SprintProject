@@ -9,14 +9,16 @@ import { InboxComponent } from './components/inbox/inbox.component';
 import { NotificationListComponent } from './components/notification-list/notification-list.component';
 import { GroupListComponent } from './components/group-list/group-list.component';
 import { GroupDetailComponent } from './components/group-detail/group-detail.component';
-import { AuthComponent } from './components/auth/auth.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SettingsComponent } from './components/settings/settings.component';
 
 export const routes: Routes = [
 
-  { path: '', redirectTo: 'auth', pathMatch: 'full' },
-  { path: 'auth', component: AuthComponent },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
 
   {
     path: '',
@@ -39,5 +41,5 @@ export const routes: Routes = [
 
     ]
   },
-  { path: '**', redirectTo: 'auth' }
+  { path: '**', redirectTo: 'login' }
 ];

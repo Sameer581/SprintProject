@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NotificationService } from '../../services/notification.service';
 import { AuthService } from '../../services/auth.service';
+import { FriendshipService } from '../../services/friendship.service';
+import { MessageService } from '../../services/message.service';
 import { Notification } from '../../models/notification.model';
+import { forkJoin, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-notification-list',
@@ -18,7 +22,9 @@ export class NotificationListComponent implements OnInit {
 
   constructor(
     private notificationService: NotificationService,
-    private authService: AuthService
+    private authService: AuthService,
+    private friendshipService: FriendshipService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -29,10 +35,44 @@ export class NotificationListComponent implements OnInit {
   loadNotifications() {
     if (!this.userId) return;
     this.loading = true;
-    this.notificationService.getNotificationsByUser(this.userId).subscribe({
-      next: (res) => {
-        // Sort newest first
-        this.notifications = res.sort((a, b) => {
+    
+    forkJoin({
+      dbNotifs: this.notificationService.getNotificationsByUser(this.userId).pipe(catchError(() => of([]))),
+      friendReqs: this.friendshipService.getPendingRequests(this.userId).pipe(catchError(() => of([]))),
+      messages: this.messageService.getMessagesByReceiver(this.userId).pipe(catchError(() => of([])))
+    }).subscribe({
+      next: (results) => {
+        let combined: Notification[] = [...results.dbNotifs];
+
+        // Add pending friend requests
+        results.friendReqs.forEach(req => {
+          combined.push({
+            userId: this.userId!,
+            content: `You have a pending friend request from ${req.username1 || 'User ' + req.userId1}`,
+            timestamp: new Date().toISOString() // Pending requests typically don't show age
+          });
+        });
+
+        // Add recent DMs (group by sender to avoid spam)
+        const recentSenders = new Set<number>();
+        // Sort messages newest first to get the most recent per sender
+        const sortedMsgs = results.messages.sort((a, b) => {
+           return new Date(b.timestamp || 0).getTime() - new Date(a.timestamp || 0).getTime();
+        });
+        
+        sortedMsgs.forEach(msg => {
+          if (!recentSenders.has(msg.senderId)) {
+            combined.push({
+              userId: this.userId!,
+              content: `You received a new direct message from User ${msg.senderId}`,
+              timestamp: msg.timestamp || new Date().toISOString()
+            });
+            recentSenders.add(msg.senderId);
+          }
+        });
+
+        // Sort all newest first
+        this.notifications = combined.sort((a, b) => {
           const dateA = a.timestamp ? new Date(a.timestamp).getTime() : 0;
           const dateB = b.timestamp ? new Date(b.timestamp).getTime() : 0;
           return dateB - dateA;
@@ -52,7 +92,7 @@ export class NotificationListComponent implements OnInit {
   }
 
   deleteNotification(notificationId: number | undefined) {
-    if (!notificationId) return;
+    if (!notificationId) return; // Cannot delete virtual notifications
     
     this.notificationService.deleteNotification(notificationId).subscribe({
       next: () => {

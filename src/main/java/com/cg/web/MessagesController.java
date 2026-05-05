@@ -45,12 +45,12 @@ public class MessagesController {
         return new SuccessMessageDto("Message sent successfully with id ", mid);
     }
 
-    @GetMapping("/sender/{senderID}")
+    @GetMapping("/sender/{senderId}")
     public List<Messages> getMessagesBySenderID(@PathVariable Long senderId) {
         return messagesService.getMessagesBySenderId(senderId);
     }
 
-    @GetMapping("/receiver/{receiverID}")
+    @GetMapping("/receiver/{receiverId}")
     public List<Messages> getMessagesByReceiverID1(@PathVariable Long receiverId) {
         return messagesService.getMessagesByReceiverId(receiverId);
     }
@@ -61,7 +61,7 @@ public class MessagesController {
         return messagesService.getConversation(user1, user2);
     }
 
-    @GetMapping("/sender/{senderID}/count")
+    @GetMapping("/sender/{senderId}/count")
     public Long countMessagesBySender(@PathVariable Long senderId) {
         return messagesService.countMessagesBySender(senderId);
     }

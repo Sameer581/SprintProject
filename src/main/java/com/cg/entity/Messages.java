@@ -3,6 +3,7 @@ package com.cg.entity;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.*;
 
@@ -47,6 +48,16 @@ public class Messages {
 
     public void setMessageId(Long messageId) {
         this.messageId = messageId;
+    }
+
+    @JsonProperty("senderId")
+    public Long getSenderId() {
+        return sender != null ? sender.getUserId() : null;
+    }
+
+    @JsonProperty("receiverId")
+    public Long getReceiverId() {
+        return receiver != null ? receiver.getUserId() : null;
     }
 
     public User getSender() {
